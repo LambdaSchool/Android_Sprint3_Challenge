@@ -8,9 +8,11 @@ public class PokemonDAO {
 
     private static final String SELECTED_POKEMON_URL = BASE_URL + "%d/";
 
-    public static JSONObject getPokemon(int pokeID) {
+    public static Pokemon getPokemon(int pokeID) {
         String pokeURL = String.format(SELECTED_POKEMON_URL, pokeID);
         
+        return null;
+
     }
 
 }
