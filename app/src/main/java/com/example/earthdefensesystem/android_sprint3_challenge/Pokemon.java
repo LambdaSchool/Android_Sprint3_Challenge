@@ -9,8 +9,8 @@ public class Pokemon implements Serializable {
     private long id;
     private String name;
     private Move[] moves;
-//    private Sprites sprites;
-//    private Type[] types;
+    private Sprites sprites;
+    private Type[] types;
 
 public Pokemon(long id){
     this.id = id;
@@ -26,11 +26,6 @@ public Pokemon(JSONObject json){
     } catch (JSONException e) {
         e.printStackTrace();
     }
-    try {
-        this.moves = json.getMove[]("moves");
-    } catch (JSONException e) {
-        e.printStackTrace();
-    }
 
 }
 
@@ -39,13 +34,13 @@ public Pokemon(JSONObject json){
 
     public String getName() { return name; }
     public void setName(String value) { this.name = value; }
-//
-//    public Move[] getMoves() { return moves; }
-//    public void setMoves(Move[] value) { this.moves = value; }
-//
-//    public Sprites getSprites() { return sprites; }
-//    public void setSprites(Sprites value) { this.sprites = value; }
-//
-//    public Type[] getTypes() { return types; }
-//    public void setTypes(Type[] value) { this.types = value; }
+
+    public Move[] getMove() { return moves; }
+    public void setMoves(Move[] value) { this.moves = value; }
+
+    public Sprites getSprite() { return sprites; }
+    public void setSprites(Sprites value) { this.sprites = value; }
+
+    public Type[] getType() { return types; }
+    public void setTypes(Type[] value) { this.types = value; }
 }

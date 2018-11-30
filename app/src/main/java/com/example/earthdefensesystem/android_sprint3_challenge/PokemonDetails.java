@@ -1,4 +1,13 @@
 package com.example.earthdefensesystem.android_sprint3_challenge;
 
-public class PokemonDetails {
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+public class PokemonDetails extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_details);
+    }
 }
