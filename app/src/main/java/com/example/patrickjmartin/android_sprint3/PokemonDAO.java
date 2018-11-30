@@ -1,5 +1,6 @@
 package com.example.patrickjmartin.android_sprint3;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PokemonDAO {
@@ -10,8 +11,17 @@ public class PokemonDAO {
 
     public static Pokemon getPokemon(int pokeID) {
         String pokeURL = String.format(SELECTED_POKEMON_URL, pokeID);
+        Pokemon iChooseYou = null;
 
-        return null;
+        final String result = NetworkAdapter.httpRequest(pokeURL, NetworkAdapter.GET);
+
+        try {
+            JSONObject pokeLevel = new JSONObject(result);
+            iChooseYou = new Pokemon(pokeLevel);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return iChooseYou;
 
     }
 
