@@ -35,31 +35,43 @@ public class Pokemon {
         }
 
         //Get types
+        ArrayList<String> typeList = new ArrayList<>();
         try {
             JSONArray jsonArray = json.getJSONArray("types");
             for (int i = 0; i < jsonArray.length(); ++i) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 JSONObject jsonSubObject = object.getJSONObject("type");
                 String type = jsonSubObject.getString("name");
-                types.add(type);
+                typeList.add(type);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        this.types = typeList;
+
         //Get moves
+        ArrayList<String> moveList = new ArrayList<>();
         try {
             JSONArray jsonArray = json.getJSONArray("moves");
             for (int i = 0; i < jsonArray.length(); ++i) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 JSONObject jsonSubObject = object.getJSONObject("move");
                 String move = jsonSubObject.getString("name");
-                moves.add(move);
+                moveList.add(move);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        this.moves = moveList;
 
         //Get spriteURL
+
+        try {
+            JSONObject object = json.getJSONObject("sprites");
+            this.spriteUrl = object.getString("front_default");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -83,7 +95,7 @@ public class Pokemon {
         return name;
     }
 
-    public ArrayList<String> getAbilities() {
+    public ArrayList<String> getMoves() {
         return moves;
     }
 

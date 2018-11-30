@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_moves">
 
         <LinearLayout
-            android:id="@+id/layout_abilities"
+            android:id="@+id/layout_moves"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
