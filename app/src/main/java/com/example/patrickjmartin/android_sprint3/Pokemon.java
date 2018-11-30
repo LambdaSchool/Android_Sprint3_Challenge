@@ -1,12 +1,15 @@
 package com.example.patrickjmartin.android_sprint3;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Pokemon {
+public class Pokemon implements Parcelable {
 
 
     private String name, spriteURL, type1, type2;
@@ -21,6 +24,7 @@ public class Pokemon {
         this.type2 = type2;
         this.ID = ID;
         this.moves = moves;
+
     }
 
     public Pokemon(JSONObject caught){
@@ -69,6 +73,7 @@ public class Pokemon {
             e.printStackTrace();
         }
 
+        this.isSaved = false;
 
     }
 
@@ -99,4 +104,40 @@ public class Pokemon {
     public ArrayList<String> getMoves() {
         return moves;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(spriteURL);
+        dest.writeString(type1);
+        dest.writeString(type2);
+        dest.writeInt(ID);
+        dest.writeSerializable(moves);
+    }
+
+    protected Pokemon(Parcel in) {
+        name = in.readString();
+        spriteURL = in.readString();
+        type1 = in.readString();
+        type2 = in.readString();
+        ID = in.readInt();
+        moves = (ArrayList<String>) in.readSerializable();
+    }
+
+    public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {
+        @Override
+        public Pokemon createFromParcel(Parcel source) {
+            return new Pokemon(source);
+        }
+
+        @Override
+        public Pokemon[] newArray(int size) {
+            return new Pokemon[size];
+        }
+    };
 }
