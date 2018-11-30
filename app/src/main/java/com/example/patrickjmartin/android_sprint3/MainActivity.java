@@ -29,20 +29,9 @@ public class MainActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent pokeDetailsIntent =  new Intent(context, ViewPokemonDetails.class);
-                        Pokemon pokemon = PokemonDAO.getPokemon(Integer.parseInt(searchBox.getText().toString()));
-                        startActivity(pokeDetailsIntent);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                
-                            }
-                        });
-                    }
-                })
+                Intent pokeDetailsIntent =  new Intent(context, ViewPokemonDetails.class);
+                Pokemon pokemon = PokemonDAO.getPokemon(Integer.parseInt(searchBox.getText().toString()));
+                startActivity(pokeDetailsIntent);
             }
         });
     }
