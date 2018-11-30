@@ -2,7 +2,6 @@ package com.thadocizn.sprintchallengethree;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -16,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         (new Thread(new Runnable() {
             @Override
             public void run() {
-                ArrayList results = PokemonDao.getAllPokemons();
+                ArrayList results = PokemonDao.getPokemon();
 
             }
         })).start();
