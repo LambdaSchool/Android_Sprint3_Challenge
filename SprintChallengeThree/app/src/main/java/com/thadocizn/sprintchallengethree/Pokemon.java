@@ -1,12 +1,13 @@
 package com.thadocizn.sprintchallengethree;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Pokemon  {
+public class Pokemon  implements Parcelable{
 
         public int id;
         public String name;
@@ -61,5 +62,39 @@ public class Pokemon  {
             e.printStackTrace();
         }
 
+    }
+
+    protected Pokemon(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        abilities = in.createStringArray();
+        sprites = in.createStringArray();
+        types = in.createStringArray();
+    }
+
+    public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {
+        @Override
+        public Pokemon createFromParcel(Parcel in) {
+            return new Pokemon(in);
+        }
+
+        @Override
+        public Pokemon[] newArray(int size) {
+            return new Pokemon[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeArray(abilities);
+        dest.writeArray(sprites);
+        dest.writeArray(types);
     }
 }
