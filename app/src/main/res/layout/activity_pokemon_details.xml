@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PokemonDetailsActivity">
+
+    <ImageView
+        android:id="@+id/pokemon_image"
+        android:layout_width="262dp"
+        android:layout_height="232dp"
+        app:layout_constraintEnd_toStartOf="@+id/scroll_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/scroll_view"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        app:layout_constraintTop_toBottomOf="@id/pokemon_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/pokemon_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="pokemon_name"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/pokemon_types"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pokemon Types: "
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/pokemon_moves"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pokemon Moves: "
+                android:textAlignment="center" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>
