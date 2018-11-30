@@ -1,5 +1,8 @@
 package com.example.jacob.android_sprint3_challenge;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -78,6 +81,47 @@ public class NetworkAdapter {
         }
         return result;
     }
+
+    public static Bitmap httpImageRequest(String urlString) {
+        Bitmap resultImage = null;
+        InputStream stream = null;
+        HttpURLConnection connection = null;
+
+        URL url = null;
+        try {
+            url = new URL(urlString);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setReadTimeout(TIMEOUT);
+            connection.setConnectTimeout(TIMEOUT);
+            connection.connect();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                stream = connection.getInputStream();
+                if (stream != null) {
+                    resultImage = BitmapFactory.decodeStream(stream);
+                }
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+        return resultImage;
+    }
+
+
+
 
 
 }

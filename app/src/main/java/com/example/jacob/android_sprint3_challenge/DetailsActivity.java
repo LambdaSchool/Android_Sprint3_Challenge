@@ -2,11 +2,13 @@ package com.example.jacob.android_sprint3_challenge;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,14 +29,17 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
-    public class offloadTask extends AsyncTask<String, Integer, Pokemon> {
+    public class offloadTask extends AsyncTask<String, Integer, Wrapper> {
 
         @Override
-        protected void onPostExecute(Pokemon pokemon) {
-            super.onPostExecute(pokemon);
-            if (pokemon != null) {
+        protected void onPostExecute(Wrapper wrapper) {
+            super.onPostExecute(wrapper);
+            if (wrapper != null) {
+                Pokemon pokemon = wrapper.pokemon;
                 ((TextView) findViewById(R.id.text_name)).setText(pokemon.getName());
-                ((TextView) findViewById(R.id.text_number)).setText(String.valueOf(pokemon.getId()));
+                ((TextView) findViewById(R.id.text_number)).setText("No " + String.valueOf(pokemon.getId()));
+                ((ImageView) findViewById(R.id.image)).setImageBitmap(wrapper.bitmap);
+
                 for (String item : pokemon.getMoves()) {
                     ((LinearLayout) findViewById(R.id.layout_moves)).addView(getDefaultTextView(item));
                 }
@@ -43,9 +48,13 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Pokemon doInBackground(String... strings) {
+        protected Wrapper doInBackground(String... strings) {
             final Pokemon pokemon = new Pokemon(PokemonDao.findPokemon(strings[0]));
-            return pokemon;
+            Bitmap bitmap = PokemonDao.getPokemonImage(pokemon.getSpriteUrl());
+            Wrapper wrapper = new Wrapper();
+            wrapper.pokemon = pokemon;
+            wrapper.bitmap = bitmap;
+            return wrapper;
         }
     }
 
@@ -57,5 +66,12 @@ public class DetailsActivity extends AppCompatActivity {
         return view;
     }
 
+    private class Wrapper {
+        public Pokemon pokemon;
+        public Bitmap bitmap;
+    }
+
 
 }
+
+
