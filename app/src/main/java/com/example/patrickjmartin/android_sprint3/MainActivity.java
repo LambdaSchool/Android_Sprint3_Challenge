@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent pokeDetailsIntent =  new Intent(context, ViewPokemonDetails.class);
                 Pokemon pokemon = PokemonDAO.getPokemon(Integer.parseInt(searchBox.getText().toString()));
+                pokeDetailsIntent.putExtra("poke_deets", pokemon);
 
                 startActivity(pokeDetailsIntent);
             }
