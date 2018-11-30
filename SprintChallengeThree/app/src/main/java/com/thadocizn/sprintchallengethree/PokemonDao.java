@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 public class PokemonDao {
     private static final String All_POKEMON = "https://pokeapi.co/api/v2/pokemon/";
+
+    //Got to change this, I need to grab one at a time, ran out of time.
+
     public static ArrayList<Pokemon>getAllPokemons(){
         ArrayList<Pokemon> pokemons = new ArrayList<>();
         String page = NetworkAdapter.httpGetRequest(All_POKEMON);
