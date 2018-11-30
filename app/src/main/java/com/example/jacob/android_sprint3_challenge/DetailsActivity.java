@@ -1,5 +1,6 @@
 package com.example.jacob.android_sprint3_challenge;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,6 +28,16 @@ public class DetailsActivity extends AppCompatActivity {
         final String searchString = getIntent().getStringExtra(MainActivity.SEARCH_DATA);
         new offloadTask().execute(searchString);
 
+        findViewById(R.id.button_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra(MainActivity.RETURN_DATA_KEY, ((TextView) findViewById(R.id.text_name)).getText().toString());
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        });
+
     }
 
     public class offloadTask extends AsyncTask<String, Integer, Wrapper> {
@@ -49,7 +60,6 @@ public class DetailsActivity extends AppCompatActivity {
                 for (String item : pokemon.getMoves()) {
                     ((LinearLayout) findViewById(R.id.layout_moves)).addView(getDefaultTextView(item));
                 }
-
             }
             findViewById(R.id.progress_bar).setVisibility(View.GONE);
         }
@@ -64,7 +74,6 @@ public class DetailsActivity extends AppCompatActivity {
             return wrapper;
         }
     }
-
 
     TextView getDefaultTextView(final String name) {
         TextView view = new TextView(context);
