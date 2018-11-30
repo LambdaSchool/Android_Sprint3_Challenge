@@ -34,9 +34,16 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, DetailsActivity.class);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        PokemonDao.findPokemon("727");
+                    }
+                }).start();
+
+/*                Intent intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra(SEARCH_DATA, ((EditText) findViewById(R.id.edit_text_search)).getText().toString());
-                startActivityForResult(intent, NEW_SEARCH_CODE);
+                startActivityForResult(intent, NEW_SEARCH_CODE);*/
             }
         });
 

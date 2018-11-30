@@ -5,15 +5,15 @@ import java.util.ArrayList;
 public class Pokemon {
     private long id;
     private String name;
-    private ArrayList<String> abilities;
+    private ArrayList<String> moves;
     private String spriteUrl;
     private ArrayList<String> types;
 
 //    ,String name, ArrayList<String> abilities, String spriteUrl, ArrayList<String> types
-    public Pokemon(long id,String name, ArrayList<String> abilities, String spriteUrl, ArrayList<String> types) {
+    public Pokemon(long id,String name, ArrayList<String> moves, String spriteUrl, ArrayList<String> types) {
         this.id = id;
         this.name = name;
-        this.abilities = abilities;
+        this.moves = moves;
         this.spriteUrl = spriteUrl;
         this.types = types;
     }
@@ -22,7 +22,7 @@ public class Pokemon {
         Pokemon pokemon = PokemonDao.findPokemon(String.valueOf(id));
         this.id = pokemon.getId();
         this.name = pokemon.getName();
-        this.abilities = pokemon.getAbilities();
+        this.moves = pokemon.getAbilities();
         this.spriteUrl = pokemon.getSpriteUrl();
         this.types = pokemon.getTypes();
     }
@@ -37,7 +37,7 @@ public class Pokemon {
     }
 
     public ArrayList<String> getAbilities() {
-        return abilities;
+        return moves;
     }
 
     public String getSpriteUrl() {
