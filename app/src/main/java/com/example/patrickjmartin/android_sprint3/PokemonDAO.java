@@ -10,7 +10,7 @@ public class PokemonDAO {
 
     public static Pokemon getPokemon(int pokeID) {
         String pokeURL = String.format(SELECTED_POKEMON_URL, pokeID);
-        
+
         return null;
 
     }
