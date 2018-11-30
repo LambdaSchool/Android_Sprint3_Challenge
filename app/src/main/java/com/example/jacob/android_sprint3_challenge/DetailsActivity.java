@@ -32,19 +32,26 @@ public class DetailsActivity extends AppCompatActivity {
     public class offloadTask extends AsyncTask<String, Integer, Wrapper> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected void onPostExecute(Wrapper wrapper) {
             super.onPostExecute(wrapper);
             if (wrapper != null) {
+                ((ImageView) findViewById(R.id.image)).setImageBitmap(wrapper.bitmap);
                 Pokemon pokemon = wrapper.pokemon;
                 ((TextView) findViewById(R.id.text_name)).setText(pokemon.getName());
                 ((TextView) findViewById(R.id.text_number)).setText("No " + String.valueOf(pokemon.getId()));
-                ((ImageView) findViewById(R.id.image)).setImageBitmap(wrapper.bitmap);
 
                 for (String item : pokemon.getMoves()) {
                     ((LinearLayout) findViewById(R.id.layout_moves)).addView(getDefaultTextView(item));
                 }
 
             }
+            findViewById(R.id.progress_bar).setVisibility(View.GONE);
         }
 
         @Override
