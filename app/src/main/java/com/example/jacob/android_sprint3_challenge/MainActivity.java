@@ -21,11 +21,12 @@ public class MainActivity extends AppCompatActivity {
     public static final String SEARCH_DATA = "search_data";
     public static final String RETURN_DATA_KEY = "return_key";
     public static final int SAVE_CODE = 89;
+
+    public static SharedPreferences preferences;
+
     EditText editText;
     Context context;
     LinearLayout parentLayout;
-    public static SharedPreferences preferences;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailsActivity.class);
-                intent.putExtra(SEARCH_DATA, editText.getText().toString());
+                intent.putExtra(SEARCH_DATA, editText.getText().toString().toLowerCase());
                 editText.setText("");
                 startActivityForResult(intent, SAVE_CODE);
             }
@@ -72,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     TextView getDefaultTextView(final String name) {
         TextView view = new TextView(context);
         view.setText(name);
@@ -99,6 +99,5 @@ public class MainActivity extends AppCompatActivity {
         });
         return view;
     }
-
 
 }

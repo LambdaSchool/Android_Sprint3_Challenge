@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class DetailsActivity extends AppCompatActivity {
     Context context;
-    LinearLayout parentlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,6 @@ public class DetailsActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     public class offloadTask extends AsyncTask<String, Integer, Wrapper> {
@@ -56,11 +54,17 @@ public class DetailsActivity extends AppCompatActivity {
                 try {
                     ((ImageView) findViewById(R.id.image)).setImageBitmap(wrapper.bitmap);
                     Pokemon pokemon = wrapper.pokemon;
-                    ((TextView) findViewById(R.id.text_name)).setText(pokemon.getName());
-                    ((TextView) findViewById(R.id.text_number)).setText("No " + String.valueOf(pokemon.getId()));
+                    String name = pokemon.getName();
+                    ((TextView) findViewById(R.id.text_name)).setText(name);
+                    ((TextView) findViewById(R.id.text_number)).setText("No. " + String.valueOf(pokemon.getId()));
                     String typeText = "";
-                    for (String item : pokemon.getTypes()) {
-                        typeText += item + " ";
+                    ArrayList<String> typeList = pokemon.getTypes();
+                    for (int i = 0; i < typeList.size(); i++) {
+                        if (i < (typeList.size() - 1)) {
+                            typeText += typeList.get(i) + " & ";
+                        } else {
+                            typeText += typeList.get(i);
+                        }
                     }
                     ((TextView) findViewById(R.id.text_types)).setText(typeText);
 
@@ -73,6 +77,8 @@ public class DetailsActivity extends AppCompatActivity {
                     finish();
                 }
             }
+            ((TextView) findViewById(R.id.text_moves_label)).setText("Moves");
+            ((TextView) findViewById(R.id.text_types_label)).setText("Types");
             findViewById(R.id.progress_bar).setVisibility(View.GONE);
         }
 
@@ -99,8 +105,6 @@ public class DetailsActivity extends AppCompatActivity {
         public Pokemon pokemon;
         public Bitmap bitmap;
     }
-
-
 }
 
 
