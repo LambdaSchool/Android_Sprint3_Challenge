@@ -58,6 +58,11 @@ public class DetailsActivity extends AppCompatActivity {
                     Pokemon pokemon = wrapper.pokemon;
                     ((TextView) findViewById(R.id.text_name)).setText(pokemon.getName());
                     ((TextView) findViewById(R.id.text_number)).setText("No " + String.valueOf(pokemon.getId()));
+                    String typeText = "";
+                    for (String item : pokemon.getTypes()) {
+                        typeText += item + " ";
+                    }
+                    ((TextView) findViewById(R.id.text_types)).setText(typeText);
 
                     for (String item : pokemon.getMoves()) {
                         ((LinearLayout) findViewById(R.id.layout_moves)).addView(getDefaultTextView(item));
@@ -85,7 +90,8 @@ public class DetailsActivity extends AppCompatActivity {
     TextView getDefaultTextView(final String name) {
         TextView view = new TextView(context);
         view.setText(name);
-        view.setTextSize(28);
+        view.setTextSize(24);
+        view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         return view;
     }
 

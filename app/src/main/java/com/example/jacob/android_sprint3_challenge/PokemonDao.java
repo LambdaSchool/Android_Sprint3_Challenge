@@ -1,13 +1,9 @@
 package com.example.jacob.android_sprint3_challenge;
 
 import android.graphics.Bitmap;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URL;
-import java.util.ArrayList;
 
 public class PokemonDao {
     private static final String BASE_URL = "https://pokeapi.co/api/v2/pokemon/";

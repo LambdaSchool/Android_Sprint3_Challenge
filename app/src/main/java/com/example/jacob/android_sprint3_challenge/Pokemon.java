@@ -78,17 +78,6 @@ public class Pokemon {
     }
     }
 
-
-//    public Pokemon(long id) {
-//        Pokemon pokemon = PokemonDao.findPokemon(String.valueOf(id));
-//        this.id = pokemon.getId();
-//        this.name = pokemon.getName();
-//        this.moves = pokemon.getAbilities();
-//        this.spriteUrl = pokemon.getSpriteUrl();
-//        this.types = pokemon.getTypes();
-//    }
-
-
     public long getId() {
         return id;
     }
