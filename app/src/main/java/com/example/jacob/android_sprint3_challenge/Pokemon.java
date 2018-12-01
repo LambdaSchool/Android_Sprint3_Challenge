@@ -24,6 +24,7 @@ public class Pokemon {
 
     public Pokemon(JSONObject json) {
         try {
+        try {
             this.id = json.getLong("id");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -72,8 +73,9 @@ public class Pokemon {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
+    } catch (NullPointerException e) {
+            e.printStackTrace();
+    }
     }
 
 

@@ -33,17 +33,19 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         preferences = this.getPreferences(Context.MODE_PRIVATE);
         parentLayout = findViewById(R.id.layout_list);
+        editText = findViewById(R.id.edit_text_search);
 
 
         findViewById(R.id.button_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailsActivity.class);
-                intent.putExtra(SEARCH_DATA, ((EditText) findViewById(R.id.edit_text_search)).getText().toString());
+                intent.putExtra(SEARCH_DATA, editText.getText().toString());
+                editText.setText("");
                 startActivityForResult(intent, SAVE_CODE);
             }
         });
-
+        refreshViews();
     }
 
     @Override
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 if (data != null) {
                     final String returnedText = data.getStringExtra(RETURN_DATA_KEY);
                     SharedPreferences.Editor editor = MainActivity.preferences.edit();
-                    editor.putString(returnedText,"");
+                    editor.putString(returnedText, "");
                     editor.apply();
                     refreshViews();
                 }
@@ -78,13 +80,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailsActivity.class);
-                intent.putExtra(SEARCH_DATA, ((EditText) findViewById(R.id.edit_text_search)).getText().toString());
+                intent.putExtra(SEARCH_DATA, name);
                 startActivity(intent);
             }
         });
         return view;
     }
-
 
 
 }

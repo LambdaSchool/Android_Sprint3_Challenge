@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -52,13 +53,19 @@ public class DetailsActivity extends AppCompatActivity {
         protected void onPostExecute(Wrapper wrapper) {
             super.onPostExecute(wrapper);
             if (wrapper != null) {
-                ((ImageView) findViewById(R.id.image)).setImageBitmap(wrapper.bitmap);
-                Pokemon pokemon = wrapper.pokemon;
-                ((TextView) findViewById(R.id.text_name)).setText(pokemon.getName());
-                ((TextView) findViewById(R.id.text_number)).setText("No " + String.valueOf(pokemon.getId()));
+                try {
+                    ((ImageView) findViewById(R.id.image)).setImageBitmap(wrapper.bitmap);
+                    Pokemon pokemon = wrapper.pokemon;
+                    ((TextView) findViewById(R.id.text_name)).setText(pokemon.getName());
+                    ((TextView) findViewById(R.id.text_number)).setText("No " + String.valueOf(pokemon.getId()));
 
-                for (String item : pokemon.getMoves()) {
-                    ((LinearLayout) findViewById(R.id.layout_moves)).addView(getDefaultTextView(item));
+                    for (String item : pokemon.getMoves()) {
+                        ((LinearLayout) findViewById(R.id.layout_moves)).addView(getDefaultTextView(item));
+                    }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, "No Pokemon found", Toast.LENGTH_LONG).show();
+                    finish();
                 }
             }
             findViewById(R.id.progress_bar).setVisibility(View.GONE);
