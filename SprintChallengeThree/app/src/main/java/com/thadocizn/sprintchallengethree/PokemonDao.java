@@ -5,23 +5,23 @@ import org.json.JSONObject;
 
 public class PokemonDao {
     private static final String All_POKEMON = "https://pokeapi.co/api/v2/pokemon/";
-    private static final String SINGLE_POKEMON = "%S";
+    private static final String SINGLE_POKEMON = "%s/";
     private static final String FULL_URL = All_POKEMON + SINGLE_POKEMON;
 
     //Got to change this, I need to grab one at a time, ran out of time.
 
-    public static Pokemon getPokemon() {
+    public static Pokemon getPokemon(int id) {
         Pokemon pokemon = null;
-        String page = NetworkAdapter.httpGetRequest(FULL_URL);
-        JSONObject json = null;
+        String strUrl = String.format(FULL_URL, id);
+        String page = NetworkAdapter.httpGetRequest(strUrl);
+
         try {
-            json = new JSONObject(page);
+            JSONObject json = new JSONObject(page);
+            pokemon = new Pokemon(json);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (json != null) {
-            pokemon = new Pokemon(json);
-        }
+
         return pokemon;
     }
 }

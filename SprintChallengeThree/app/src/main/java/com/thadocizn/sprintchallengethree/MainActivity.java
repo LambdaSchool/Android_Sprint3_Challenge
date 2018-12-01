@@ -15,8 +15,7 @@ public class MainActivity extends AppCompatActivity {
         (new Thread(new Runnable() {
             @Override
             public void run() {
-                ArrayList results = PokemonDao.getPokemon();
-
+                PokemonDao.getPokemon(1);
             }
         })).start();
     }
