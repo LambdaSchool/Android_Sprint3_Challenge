@@ -26,14 +26,21 @@ public class MainActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.search_button);
         searchBox = findViewById(R.id.search_bar);
 
+        int var = 1;
+        Pokemon test = PokemonDAO.getPokemon(20);
+
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Pokemon pokemon = PokemonDAO.getPokemon(30);
                 Intent pokeDetailsIntent =  new Intent(context, ViewPokemonDetails.class);
-                Pokemon pokemon = PokemonDAO.getPokemon(Integer.parseInt(searchBox.getText().toString()));
+
                 pokeDetailsIntent.putExtra("poke_deets", pokemon);
 
                 startActivity(pokeDetailsIntent);
+
             }
         });
     }
