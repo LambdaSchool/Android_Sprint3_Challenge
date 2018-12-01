@@ -32,7 +32,7 @@ public class NetworkAdapter {
                 connection.connect();
             }
 
-            int CODE = connection.getResponseCode();
+
             if(connection.getResponseCode() == HttpURLConnection.HTTP_OK){
                 stream = connection.getInputStream();
                 if(stream != null){

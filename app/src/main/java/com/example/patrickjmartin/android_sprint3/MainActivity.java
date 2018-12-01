@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,12 +34,23 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Pokemon pokemon = PokemonDAO.getPokemon(30);
+                        final Pokemon pokemon = PokemonDAO.getPokemon(Integer.parseInt(searchBox.getText().toString()));
                         Intent pokeDetailsIntent =  new Intent(context, ViewPokemonDetails.class);
-
                         pokeDetailsIntent.putExtra("poke_deets", pokemon);
-
                         startActivity(pokeDetailsIntent);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                final TextView tv = new TextView(context);
+                                tv.setText(pokemon.getName());
+                                tv.setTextSize(25);
+
+                                
+                                savedListLayout.addView(tv);
+                            }
+                        });
+
 
                     }
                 }).start();

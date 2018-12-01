@@ -31,7 +31,6 @@ public class ViewPokemonDetails extends AppCompatActivity {
         setContentView(R.layout.activity_view_pokemon_details);
         context = this;
 
-        pokeImage = findViewById(R.id.image_pokemon);
         pokeName = findViewById(R.id.tv_pokemon_name);
         pokeType1 = findViewById(R.id.tv_type1);
         pokeType2 = findViewById(R.id.tv_type2);
@@ -43,7 +42,7 @@ public class ViewPokemonDetails extends AppCompatActivity {
         Pokemon pokemonPicked = intent.getParcelableExtra("poke_deets");
 
         pokeName.setText(pokemonPicked.getName());
-        pokeNum.setText(pokemonPicked.getID());
+        pokeNum.setText(String.valueOf(pokemonPicked.getID()));
         pokeType1.setText(pokemonPicked.getType1());
         pokeType2.setText(pokemonPicked.getType2());
 
@@ -57,8 +56,10 @@ public class ViewPokemonDetails extends AppCompatActivity {
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView pokeImage;
 
-        public DownloadImageTask(ImageView viewById) {
+        public DownloadImageTask(ImageView pokeImage) {
+            this.pokeImage = pokeImage;
         }
 
         @Override
@@ -87,6 +88,7 @@ public class ViewPokemonDetails extends AppCompatActivity {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             pokeImage.setImageBitmap(bitmap);
+            findViewById(R.id.progress_bar).setVisibility(View.GONE);
         }
     }
 
