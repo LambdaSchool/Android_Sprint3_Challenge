@@ -1,5 +1,7 @@
 package com.thadocizn.sprintchallengethree;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,12 +14,15 @@ public class PokemonDao {
 
     public static Pokemon getPokemon(int id) {
         Pokemon pokemon = null;
+        Bitmap imagePokemon;
         String strUrl = String.format(FULL_URL, id);
         String page = NetworkAdapter.httpGetRequest(strUrl);
 
         try {
             JSONObject json = new JSONObject(page);
             pokemon = new Pokemon(json);
+            imagePokemon = NetworkAdapter.httpImageRequest(pokemon.getSpriteUrl());
+            pokemon.setImagePokemon(imagePokemon);
         } catch (JSONException e) {
             e.printStackTrace();
         }

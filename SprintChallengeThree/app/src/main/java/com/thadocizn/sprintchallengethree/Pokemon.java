@@ -90,6 +90,58 @@ public class Pokemon  implements Parcelable{
         return 0;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSpriteUrl() {
+        return spriteUrl;
+    }
+
+    public void setSpriteUrl(String spriteUrl) {
+        this.spriteUrl = spriteUrl;
+    }
+
+    public String[] getAbilities() {
+        return abilities;
+    }
+
+    public void setAbilities(String[] abilities) {
+        this.abilities = abilities;
+    }
+
+    public String[] getTypes() {
+        return types;
+    }
+
+    public void setTypes(String[] types) {
+        this.types = types;
+    }
+
+    public Bitmap getImagePokemon() {
+        return imagePokemon;
+    }
+
+    public void setImagePokemon(Bitmap imagePokemon) {
+        this.imagePokemon = imagePokemon;
+    }
+
+    public static Creator<Pokemon> getCREATOR() {
+        return CREATOR;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
