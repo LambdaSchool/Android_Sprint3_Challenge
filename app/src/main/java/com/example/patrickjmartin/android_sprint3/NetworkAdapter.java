@@ -28,10 +28,11 @@ public class NetworkAdapter {
             connection.setConnectTimeout(TIMEOUT);
             connection.setRequestMethod(requestType);
 
-            if(requestType.equals(GET)){
+            if(requestType.equals(GET)) {
                 connection.connect();
             }
 
+            int CODE = connection.getResponseCode();
             if(connection.getResponseCode() == HttpURLConnection.HTTP_OK){
                 stream = connection.getInputStream();
                 if(stream != null){
@@ -44,6 +45,7 @@ public class NetworkAdapter {
                     result = sb.toString();
                 }
             }
+
         }catch (MalformedURLException e) {
             e.printStackTrace();
             result = e.getMessage();
