@@ -3,6 +3,7 @@ package com.example.jacob.android_sprint3_challenge;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     Context context;
     LinearLayout parentLayout;
+    public static SharedPreferences preferences;
 
 
     @Override
@@ -26,20 +31,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-
+        preferences = this.getPreferences(Context.MODE_PRIVATE);
         parentLayout = findViewById(R.id.layout_list);
 
 
         findViewById(R.id.button_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Pokemon pokemon = new Pokemon(PokemonDao.findPokemon("727"));
-                    }
-                }).start();*/
-
                 Intent intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra(SEARCH_DATA, ((EditText) findViewById(R.id.edit_text_search)).getText().toString());
                 startActivityForResult(intent, SAVE_CODE);
@@ -54,11 +52,23 @@ public class MainActivity extends AppCompatActivity {
             if (requestCode == SAVE_CODE) {
                 if (data != null) {
                     final String returnedText = data.getStringExtra(RETURN_DATA_KEY);
-                    parentLayout.addView(getDefaultTextView(returnedText));
+                    SharedPreferences.Editor editor = MainActivity.preferences.edit();
+                    editor.putString(returnedText,"");
+                    editor.apply();
+                    refreshViews();
                 }
             }
         }
     }
+
+    private void refreshViews() {
+        parentLayout.removeAllViews();
+        Map<String, ?> allEntries = MainActivity.preferences.getAll();
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            parentLayout.addView(getDefaultTextView(entry.getKey()));
+        }
+    }
+
 
     TextView getDefaultTextView(final String name) {
         TextView view = new TextView(context);
