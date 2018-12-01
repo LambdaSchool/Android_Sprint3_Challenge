@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -82,6 +83,18 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra(SEARCH_DATA, name);
                 startActivity(intent);
+            }
+        });
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                SharedPreferences.Editor editor = MainActivity.preferences.edit();
+                editor.remove(name);
+                editor.apply();
+                String toastMessage = name + " deleted.";
+                Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
+                refreshViews();
+                return true;
             }
         });
         return view;
