@@ -1,4 +1,4 @@
-package com.thadocizn.sprintchallengethree;
+package com.thadocizn.sprintchallengethree.data;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

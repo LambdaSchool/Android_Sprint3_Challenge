@@ -1,9 +1,10 @@
-package com.thadocizn.sprintchallengethree;
+package com.thadocizn.sprintchallengethree.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import java.util.ArrayList;
+import com.thadocizn.sprintchallengethree.data.PokemonDao;
+import com.thadocizn.sprintchallengethree.R;
 
 public class MainActivity extends AppCompatActivity {
 

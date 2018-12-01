@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SprintChallengeThree</string>
+    <string name="pokemon">Pokemon</string>
+    <string name="name_of_pokemon">Enter a name or number</string>
 </resources>

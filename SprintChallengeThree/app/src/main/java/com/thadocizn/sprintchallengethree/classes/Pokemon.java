@@ -1,4 +1,4 @@
-package com.thadocizn.sprintchallengethree;
+package com.thadocizn.sprintchallengethree.classes;
 
 import android.graphics.Bitmap;
 import android.os.Parcel;

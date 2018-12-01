@@ -1,6 +1,9 @@
-package com.thadocizn.sprintchallengethree;
+package com.thadocizn.sprintchallengethree.data;
 
 import android.graphics.Bitmap;
+
+import com.thadocizn.sprintchallengethree.classes.Pokemon;
+import com.thadocizn.sprintchallengethree.data.NetworkAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
