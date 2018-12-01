@@ -3,21 +3,13 @@ package com.thadocizn.sprintchallengethree.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.thadocizn.sprintchallengethree.data.PokemonDao;
 import com.thadocizn.sprintchallengethree.R;
 
-public class MainActivity extends AppCompatActivity {
+public class PokemonDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon_detail);
-
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                PokemonDao.getPokemon(1);
-            }
-        })).start();
     }
 }

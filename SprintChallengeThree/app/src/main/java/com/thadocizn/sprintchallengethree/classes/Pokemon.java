@@ -55,7 +55,7 @@ public class Pokemon  implements Parcelable{
             JSONArray jsonTypes = jsonObject.getJSONArray("types");
             this.types = new String[jsonTypes.length()];
             for (int i = 0; i <jsonTypes.length() ; i++) {
-                this.types[1] = jsonTypes.getString(i);
+                this.types[i] = jsonTypes.getString(i);
             }
         }catch (JSONException e){
             e.printStackTrace();
