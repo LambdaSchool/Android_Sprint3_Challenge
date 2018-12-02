@@ -1,11 +1,17 @@
 package com.thadocizn.sprintchallengethree.data;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.thadocizn.sprintchallengethree.Constants;
+import com.thadocizn.sprintchallengethree.activities.MainActivity;
 import com.thadocizn.sprintchallengethree.classes.Pokemon;
+import com.thadocizn.sprintchallengethree.classes.PokemonNames;
 import com.thadocizn.sprintchallengethree.data.NetworkAdapter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,19 +29,12 @@ public class PokemonDao {
         Bitmap imagePokemon;
         String strUrl = String.format(FULL_URL, id);
         String page = NetworkAdapter.httpGetRequest(strUrl);
-        ArrayList<String> strNames;
+        getNames();
 
         try {
             JSONObject json = new JSONObject(page);
             pokemon = new Pokemon(json);
-            strNames = new ArrayList<>();
-            for (int i = 0; i < json.length(); i++) {
-                pokemon = new Pokemon(json);
-                String name = pokemon.getName();
-                strNames.add(name);
 
-            }
-            Log.i("Charles", "Charles" + strNames.size());
             imagePokemon = NetworkAdapter.httpImageRequest(pokemon.getSpriteUrl());
             pokemon.setImagePokemon(imagePokemon);
         } catch (JSONException e) {
@@ -43,5 +42,32 @@ public class PokemonDao {
         }
 
         return pokemon;
+    }
+
+    public static void getNames(){
+        String result = NetworkAdapter.httpGetRequest(All_POKEMON);
+        ArrayList<String> names = new ArrayList<>();
+
+        try {
+            JSONObject json = new JSONObject(result);
+            JSONArray name = json.getJSONArray("results");
+
+            for (int i = 0; i < name.length(); ++i) {
+                PokemonNames pokemon = new PokemonNames(name.getJSONObject(i));
+                names.add(pokemon.getName());
+                Log.i("charles", "Charles" + " " + pokemon.getName());
+
+            }
+            if (MainActivity.preferences != null){
+                SharedPreferences.Editor editor = MainActivity.preferences.edit();
+                Gson gson = new Gson();
+                String jsonNameList = gson.toJson(names);
+                editor.putString(Constants.NAME_LIST, jsonNameList);
+                editor.apply();
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
