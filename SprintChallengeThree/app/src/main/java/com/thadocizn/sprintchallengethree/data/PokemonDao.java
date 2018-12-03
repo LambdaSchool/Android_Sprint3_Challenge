@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thadocizn.sprintchallengethree.Constants;
 import com.thadocizn.sprintchallengethree.activities.MainActivity;
 import com.thadocizn.sprintchallengethree.classes.Pokemon;
@@ -15,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class PokemonDao {
@@ -24,17 +26,16 @@ public class PokemonDao {
 
     //Got to change this, I need to grab one at a time, ran out of time.
 
-    public static Pokemon getPokemon(int id) {
+    public static Pokemon getPokemon(String id) {
         Pokemon pokemon = null;
         Bitmap imagePokemon;
         String strUrl = String.format(FULL_URL, id);
         String page = NetworkAdapter.httpGetRequest(strUrl);
-        getNames();
+        saveNames();
 
         try {
             JSONObject json = new JSONObject(page);
             pokemon = new Pokemon(json);
-
             imagePokemon = NetworkAdapter.httpImageRequest(pokemon.getSpriteUrl());
             pokemon.setImagePokemon(imagePokemon);
         } catch (JSONException e) {
@@ -44,7 +45,7 @@ public class PokemonDao {
         return pokemon;
     }
 
-    public static void getNames(){
+    public static void saveNames(){
         String result = NetworkAdapter.httpGetRequest(All_POKEMON);
         ArrayList<String> names = new ArrayList<>();
 
@@ -69,5 +70,12 @@ public class PokemonDao {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+    public static ArrayList<String> getNames(){
+        SharedPreferences preferences = MainActivity.preferences;
+        Gson gson = new Gson();
+        String json = preferences.getString(Constants.NAME_LIST, null);
+        Type type = new TypeToken<ArrayList<String>>(){}.getType();
+        return gson.fromJson(json, type);
     }
 }

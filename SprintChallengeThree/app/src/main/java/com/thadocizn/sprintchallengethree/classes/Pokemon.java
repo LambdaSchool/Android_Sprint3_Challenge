@@ -10,20 +10,20 @@ import org.json.JSONObject;
 
 public class Pokemon  implements Parcelable{
 
-        public int id;
-        public String name;
-        public String spriteUrl;
-        public String[] abilities;
-        public String[] types ;
+        private int id;
+        private String name;
+        private String spriteUrl;
+        private String[] abilities;
+        private String[] types ;
         private Bitmap imagePokemon;
 
-    public Pokemon(int id, String name, String[] abilities, String spriteUrl, String[] types) {
+   /* public Pokemon(int id, String name, String[] abilities, String spriteUrl, String[] types) {
         this.id = id;
         this.name = name;
         this.spriteUrl = spriteUrl;
         this.abilities = abilities;
         this.types = types;
-    }
+    }*/
 
     public Pokemon(JSONObject jsonObject) {
         try {
