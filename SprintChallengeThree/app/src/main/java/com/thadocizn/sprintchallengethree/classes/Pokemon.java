@@ -8,17 +8,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Map;
+public class Pokemon implements Parcelable {
 
-public class Pokemon  implements Parcelable{
-
-        private int id;
-        private String name;
-        private String spriteUrl;
-        private String[] abilities;
-        private String[] types ;
-        private Bitmap imagePokemon;
-        private boolean favorite;
+    private int id;
+    private String name;
+    private String spriteUrl;
+    private String[] abilities;
+    private String[] types;
+    private Bitmap imagePokemon;
+    private boolean favorite;
 
     public String[] getTypes() {
         return types;
@@ -45,32 +43,32 @@ public class Pokemon  implements Parcelable{
         try {
             JSONObject jsonSprites = jsonObject.getJSONObject("sprites");
             this.spriteUrl = jsonSprites.getString("front_default");
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
         try {
             JSONArray jsonAbilities = jsonObject.getJSONArray("abilities");
             this.abilities = new String[jsonAbilities.length()];
-            for (int i = 0; i <jsonAbilities.length() ; ++i) {
+            for (int i = 0; i < jsonAbilities.length(); ++i) {
                 JSONObject abilities = jsonAbilities.getJSONObject(i);
                 JSONObject ability = abilities.getJSONObject("ability");
                 String name = ability.getString("name");
                 this.abilities[i] = name;
             }
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
             JSONArray jsonTypes = jsonObject.getJSONArray("types");
             this.types = new String[jsonTypes.length()];
-            for (int i = 0; i <jsonTypes.length() ; i++) {
+            for (int i = 0; i < jsonTypes.length(); i++) {
                 JSONObject types = jsonTypes.getJSONObject(i);
                 JSONObject type = types.getJSONObject("type");
                 String name = type.getString("name");
                 this.types[i] = name;
             }
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 

@@ -2,7 +2,6 @@ package com.thadocizn.sprintchallengethree.data;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -11,7 +10,6 @@ import com.thadocizn.sprintchallengethree.Constants;
 import com.thadocizn.sprintchallengethree.activities.MainActivity;
 import com.thadocizn.sprintchallengethree.classes.Pokemon;
 import com.thadocizn.sprintchallengethree.classes.PokemonNames;
-import com.thadocizn.sprintchallengethree.data.NetworkAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +43,7 @@ public class PokemonDao {
         return pokemon;
     }
 
-    public static void saveNames(){
+    public static void saveNames() {
         String result = NetworkAdapter.httpGetRequest(All_POKEMON);
         ArrayList<String> names = new ArrayList<>();
 
@@ -59,7 +57,7 @@ public class PokemonDao {
                 Log.i("charles", "Charles" + " " + pokemon.getName());
 
             }
-            if (MainActivity.preferences != null){
+            if (MainActivity.preferences != null) {
                 SharedPreferences.Editor editor = MainActivity.preferences.edit();
                 Gson gson = new Gson();
                 String jsonNameList = gson.toJson(names);
@@ -71,11 +69,13 @@ public class PokemonDao {
             e.printStackTrace();
         }
     }
-    public static ArrayList<String> getNames(){
+
+    public static ArrayList<String> getNames() {
         SharedPreferences preferences = MainActivity.preferences;
         Gson gson = new Gson();
         String json = preferences.getString(Constants.NAME_LIST, null);
-        Type type = new TypeToken<ArrayList<String>>(){}.getType();
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
         return gson.fromJson(json, type);
     }
 }

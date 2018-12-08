@@ -6,7 +6,7 @@ import org.json.JSONObject;
 public class PokemonNames {
     private String name, url;
 
-    public PokemonNames(JSONObject jsonObject){
+    public PokemonNames(JSONObject jsonObject) {
         try {
             this.name = jsonObject.getString("name");
         } catch (JSONException e) {
