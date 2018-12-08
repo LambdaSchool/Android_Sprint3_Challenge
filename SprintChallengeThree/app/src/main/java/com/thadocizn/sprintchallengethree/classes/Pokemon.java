@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 public class Pokemon  implements Parcelable{
 
         private int id;
@@ -16,16 +18,11 @@ public class Pokemon  implements Parcelable{
         private String[] abilities;
         private String[] types ;
         private Bitmap imagePokemon;
-
-   /* public Pokemon(int id, String name, String[] abilities, String spriteUrl, String[] types) {
-        this.id = id;
-        this.name = name;
-        this.spriteUrl = spriteUrl;
-        this.abilities = abilities;
-        this.types = types;
-    }*/
+        private boolean favorite;
 
     public Pokemon(JSONObject jsonObject) {
+        this.favorite = false;
+
         try {
             this.id = jsonObject.getInt("id");
         } catch (JSONException e) {
@@ -36,17 +33,23 @@ public class Pokemon  implements Parcelable{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         try {
             JSONObject jsonSprites = jsonObject.getJSONObject("sprites");
             this.spriteUrl = jsonSprites.getString("front_default");
         }catch (JSONException e){
             e.printStackTrace();
         }
+
+
         try {
             JSONArray jsonAbilities = jsonObject.getJSONArray("abilities");
             this.abilities = new String[jsonAbilities.length()];
-            for (int i = 0; i <jsonAbilities.length() ; i++) {
-                this.abilities[1] = jsonAbilities.getString(i);
+            for (int i = 0; i <jsonAbilities.length() ; ++i) {
+                JSONObject abilities = jsonAbilities.getJSONObject(i);
+                JSONObject ability = abilities.getJSONObject("ability");
+                String name = ability.getString("name");
+                this.abilities[i] = name;
             }
         }catch (JSONException e){
             e.printStackTrace();
@@ -55,7 +58,10 @@ public class Pokemon  implements Parcelable{
             JSONArray jsonTypes = jsonObject.getJSONArray("types");
             this.types = new String[jsonTypes.length()];
             for (int i = 0; i <jsonTypes.length() ; i++) {
-                this.types[i] = jsonTypes.getString(i);
+                JSONObject types = jsonTypes.getJSONObject(i);
+                JSONObject type = types.getJSONObject("type");
+                String name = type.getString("name");
+                this.types[i] = name;
             }
         }catch (JSONException e){
             e.printStackTrace();
@@ -85,6 +91,10 @@ public class Pokemon  implements Parcelable{
         }
     };
 
+    public String[] getAbilities() {
+        return abilities;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -110,26 +120,6 @@ public class Pokemon  implements Parcelable{
         return spriteUrl;
     }
 
-    public void setSpriteUrl(String spriteUrl) {
-        this.spriteUrl = spriteUrl;
-    }
-
-    public String[] getAbilities() {
-        return abilities;
-    }
-
-    public void setAbilities(String[] abilities) {
-        this.abilities = abilities;
-    }
-
-    public String[] getTypes() {
-        return types;
-    }
-
-    public void setTypes(String[] types) {
-        this.types = types;
-    }
-
     public Bitmap getImagePokemon() {
         return imagePokemon;
     }
@@ -138,17 +128,13 @@ public class Pokemon  implements Parcelable{
         this.imagePokemon = imagePokemon;
     }
 
-    public static Creator<Pokemon> getCREATOR() {
-        return CREATOR;
-    }
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(name);
-        dest.writeArray(abilities);
+        dest.writeStringArray(abilities);
         dest.writeString(spriteUrl);
-        dest.writeArray(types);
+        dest.writeStringArray(types);
         dest.writeParcelable(imagePokemon, flags);
     }
 }

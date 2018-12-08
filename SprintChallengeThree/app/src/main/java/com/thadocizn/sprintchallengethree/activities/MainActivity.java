@@ -42,18 +42,15 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        if (!strPokemon.equals("")){
+
                             Pokemon pokemon =PokemonDao.getPokemon(strPokemon);
                             Intent intent = new Intent(context, PokemonDetailActivity.class);
                             intent.putExtra(Constants.PICKED_POKEMON, pokemon);
                             startActivity(intent);
-                        }
-
                     }
                 }).start();
             }
         });
-        names = new ArrayList<String>();
 
     }
 }

@@ -2,6 +2,7 @@ package com.thadocizn.sprintchallengethree.data;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -28,15 +29,14 @@ public class PokemonDao {
 
     public static Pokemon getPokemon(String id) {
         Pokemon pokemon = null;
-        Bitmap imagePokemon;
-        String strUrl = String.format(FULL_URL, id);
+        String strUrl = FULL_URL.replace("%s", id);
         String page = NetworkAdapter.httpGetRequest(strUrl);
         saveNames();
 
         try {
             JSONObject json = new JSONObject(page);
             pokemon = new Pokemon(json);
-            imagePokemon = NetworkAdapter.httpImageRequest(pokemon.getSpriteUrl());
+            Bitmap imagePokemon = NetworkAdapter.httpImageRequest(pokemon.getSpriteUrl());
             pokemon.setImagePokemon(imagePokemon);
         } catch (JSONException e) {
             e.printStackTrace();
