@@ -33,14 +33,19 @@ public class PokemonDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Pokemon pokemon = intent.getParcelableExtra(Constants.PICKED_POKEMON);
         name.setText(pokemon.getName());
-        StringBuilder currentAbility = null;
+        pokemonImage.setImageBitmap(pokemon.getImagePokemon());
 
+        String currentAbility = "";
         for (String ability : pokemon.getAbilities()) {
-            Log.i("fgsfs", "hfhf" + Arrays.toString(pokemon.getAbilities()));
-            currentAbility = (currentAbility == null ? new StringBuilder("null") : currentAbility).append(currentAbility).append(ability);
+            currentAbility = currentAbility + "\n" + ability;
         }
 
         abilities.setText(currentAbility);
-        pokemonImage.setImageBitmap(pokemon.getImagePokemon());
+
+        String currentType = "";
+        for (String ability : pokemon.getTypes()) {
+            Log.i("fgsfs", "hfhf" + Arrays.toString(pokemon.getTypes()));
+            currentAbility = currentAbility + "\n" + ability;
+        }
     }
 }

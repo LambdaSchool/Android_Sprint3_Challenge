@@ -20,6 +20,14 @@ public class Pokemon  implements Parcelable{
         private Bitmap imagePokemon;
         private boolean favorite;
 
+    public String[] getTypes() {
+        return types;
+    }
+
+    public void setTypes(String[] types) {
+        this.types = types;
+    }
+
     public Pokemon(JSONObject jsonObject) {
         this.favorite = false;
 
@@ -40,7 +48,6 @@ public class Pokemon  implements Parcelable{
         }catch (JSONException e){
             e.printStackTrace();
         }
-
 
         try {
             JSONArray jsonAbilities = jsonObject.getJSONArray("abilities");
