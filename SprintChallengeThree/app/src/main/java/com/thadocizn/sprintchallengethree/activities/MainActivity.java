@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.thadocizn.sprintchallengethree.Constants;
 import com.thadocizn.sprintchallengethree.classes.Pokemon;
@@ -26,14 +28,18 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList names;
     private ImageButton button;
     private Context context;
+    private LinearLayout parent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         preferences = getSharedPreferences(Constants.NAME_LIST, Context.MODE_PRIVATE);
         etPokemon = findViewById(R.id.editTextPokemon);
         context = this;
+
+        parent = findViewById(R.id.parentLayout);
         button = findViewById(R.id.imageButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,10 +49,26 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                            Pokemon pokemon =PokemonDao.getPokemon(strPokemon);
+                            final Pokemon pokemon =PokemonDao.getPokemon(strPokemon);
                             Intent intent = new Intent(context, PokemonDetailActivity.class);
                             intent.putExtra(Constants.PICKED_POKEMON, pokemon);
                             startActivity(intent);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    final TextView textView = new TextView(context);
+                                    textView.setText(pokemon.getId() + " " + pokemon.getName());
+                                    textView.setOnLongClickListener(new View.OnLongClickListener() {
+                                        @Override
+                                        public boolean onLongClick(View v) {
+                                            textView.setVisibility(View.GONE);
+                                            return false;
+                                        }
+                                    });
+                                    parent.addView(textView);
+                                }
+                            });
                     }
                 }).start();
             }
