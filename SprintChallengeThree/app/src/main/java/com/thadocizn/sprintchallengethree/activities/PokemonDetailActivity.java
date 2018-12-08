@@ -18,14 +18,16 @@ import java.util.Arrays;
 
 public class PokemonDetailActivity extends AppCompatActivity {
 
+    private TextView types;
     private TextView abilities;
-    TextView name;
+    private TextView name;
     private ImageView pokemonImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon_detail);
 
+        types = findViewById(R.id.tvPokemonType);
         name = findViewById(R.id.tvPokemonName);
         abilities= findViewById(R.id.tvPokemonAbilities);
         pokemonImage = findViewById(R.id.imageViewPokemon);
@@ -43,9 +45,11 @@ public class PokemonDetailActivity extends AppCompatActivity {
         abilities.setText(currentAbility);
 
         String currentType = "";
-        for (String ability : pokemon.getTypes()) {
+        for (String type : pokemon.getTypes()) {
             Log.i("fgsfs", "hfhf" + Arrays.toString(pokemon.getTypes()));
-            currentAbility = currentAbility + "\n" + ability;
+            currentType = currentType + "\n" + type;
         }
+
+        types.setText(currentType);
     }
 }
