@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String TAG = MainActivity.class.getSimpleName();
     public static SharedPreferences preferences;
     private EditText etPokemon;
     private ArrayAdapter adapter;
