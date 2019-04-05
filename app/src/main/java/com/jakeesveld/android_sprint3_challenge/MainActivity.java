@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String searchQuery = buttonSubmit.getText().toString();
+                final String searchQuery = editSearch.getText().toString();
 
                 new Thread(new Runnable() {
                     @Override

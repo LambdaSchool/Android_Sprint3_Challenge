@@ -4,9 +4,13 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pokemon implements Parcelable {
+public class Pokemon implements Serializable {
 
     public static final String POKEMON_INTENT_KEY = "pokemon";
     private String name, spriteUrl, id;
@@ -29,7 +33,7 @@ public class Pokemon implements Parcelable {
         this.spriteBitmap = spriteBitmap;
     }
 
-    protected Pokemon(Parcel in) {
+/*    protected Pokemon(Parcel in) {
         name = in.readString();
         spriteUrl = in.readString();
         id = in.readString();
@@ -48,7 +52,7 @@ public class Pokemon implements Parcelable {
         public Pokemon[] newArray(int size) {
             return new Pokemon[size];
         }
-    };
+    };*/
 
     public String getName() {
         return name;
@@ -67,10 +71,24 @@ public class Pokemon implements Parcelable {
     }
 
     public ArrayList<String> getTypes() {
-        return types;
+        ArrayList<String> typesPlainText = new ArrayList<>();
+        for(String json: types){
+            try{
+                JSONObject jsonObject = new JSONObject(json);
+                String typeName = jsonObject.getString("name");
+                typesPlainText.add(typeName);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return typesPlainText;
     }
 
-    @Override
+    public Bitmap getSpriteBitmap() {
+        return spriteBitmap;
+    }
+
+/*    @Override
     public int describeContents() {
         return 0;
     }
@@ -83,5 +101,5 @@ public class Pokemon implements Parcelable {
         dest.writeArray(abilities.toArray());
         dest.writeArray(types.toArray());
         dest.writeValue(spriteBitmap);
-    }
+    }*/
 }

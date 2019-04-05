@@ -38,7 +38,7 @@ public class PokemonDAO {
                 abilities.add(ability.getString("name"));
             }
 
-            Pokemon newPokemon = new Pokemon(pokemonName, spriteUrl, pokemonId, abilities, types, NetworkAdapter.bitmapFromUrl(spriteUrl));
+            Pokemon newPokemon = new Pokemon(pokemonName, spriteUrl, pokemonId, abilities, types);
             return newPokemon;
         } catch (JSONException e) {
             e.printStackTrace();

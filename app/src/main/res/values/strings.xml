@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Android_Sprint3_Challenge</string>
+    <string name="ViewerTextName">Pokemon Name</string>
+    <string name="ViewerTextNumber">No. Ex</string>
+    <string name="ViewerTextAbilities">Abilities</string>
+    <string name="SearchHintEdit">Enter name or number of Pokemon</string>
+    <string name="SearchButtonText">Search</string>
 </resources>
