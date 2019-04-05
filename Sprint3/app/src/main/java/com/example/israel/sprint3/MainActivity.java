@@ -3,6 +3,7 @@ package com.example.israel.sprint3;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String KEY_EXTRA_POKEMON = "pokemon";
 
+    PokemonSearchResultsAdapter pokemonSearchResultsAdapter;
     EditText pokemonSearchEditText;
     Button pokemonSearchButton;
 
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        final PokemonSearchResultsAdapter pokemonSearchResultsAdapter = new PokemonSearchResultsAdapter(this);
+        pokemonSearchResultsAdapter = new PokemonSearchResultsAdapter(this);
         recyclerView.setAdapter(pokemonSearchResultsAdapter);
 
         // edit text search
@@ -62,7 +64,17 @@ public class MainActivity extends AppCompatActivity {
         pokemonSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO
+                String searchStr = pokemonSearchEditText.getText().toString();
+                try {
+                    // search by id
+                    int searchInt = Integer.parseInt(searchStr);
+                    searchPokemonById(searchInt);
+                } catch (NumberFormatException e) {
+                    // search by name
+                    ArrayList<String> searchedPokemonNames = PokemonNamesRepository.searchPokemonByName(searchStr);
+                    pokemonSearchResultsAdapter.setPokemonNames(searchedPokemonNames);
+                }
+
             }
         });
 
@@ -78,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openPokemonDetails(String pokemonName) {
-        enableSearch(false);
+        enableSearch(false); // disable search
 
         @SuppressLint("StaticFieldLeak")
         DownloadPokemonAsyncTask downloadPokemonAsyncTask = new DownloadPokemonAsyncTask() {
@@ -100,6 +112,30 @@ public class MainActivity extends AppCompatActivity {
         };
 
         downloadPokemonAsyncTask.execute(pokemonName);
+    }
+
+    private void searchPokemonById(int pokemonId) {
+        enableSearch(false); // disable search
+
+        @SuppressLint("StaticFieldLeak")
+        DownloadPokemonByIdAsyncTask downloadPokemonByIdAsyncTask = new DownloadPokemonByIdAsyncTask() {
+            @Override
+            protected void onPostExecute(Pokemon pokemon) {
+                super.onPostExecute(pokemon);
+
+                enableSearch(true);
+
+                if (pokemon == null) { // if this is null then there's no such pokemon id
+                    return;
+                }
+
+                ArrayList<String> searchedPokemonNames = new ArrayList<>();
+                searchedPokemonNames.add(pokemon.getName());
+                pokemonSearchResultsAdapter.setPokemonNames(searchedPokemonNames);
+            }
+        };
+
+        downloadPokemonByIdAsyncTask.execute(pokemonId);
     }
 
     private class DownloadPokemonNamesAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -127,6 +163,14 @@ public class MainActivity extends AppCompatActivity {
             return PokemonNetworkDAO.getPokemon(strings[0]);
         }
 
+    }
+
+    private class DownloadPokemonByIdAsyncTask extends AsyncTask<Integer, Void, Pokemon> {
+
+        @Override
+        protected Pokemon doInBackground(Integer... integers) {
+            return PokemonNetworkDAO.getPokemon(Integer.toString(integers[0]));
+        }
     }
 
 

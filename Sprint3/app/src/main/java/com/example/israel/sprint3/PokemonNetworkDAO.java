@@ -1,6 +1,5 @@
 package com.example.israel.sprint3;
 
-import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
@@ -17,8 +16,8 @@ public class PokemonNetworkDAO {
 
     @Nullable
     @WorkerThread
-    public static Pokemon getPokemon(String name) {
-        String pokemonJsonStr = NetworkAdapter.httpRequestGET(BASE_URL + POKEMON + name);
+    public static Pokemon getPokemon(String nameOrId) {
+        String pokemonJsonStr = NetworkAdapter.httpRequestGET(BASE_URL + POKEMON + nameOrId);
         if (pokemonJsonStr == null) {
             return null;
         }
