@@ -27,7 +27,7 @@ This project uses the **pokeapi.co API** ([API Documentation](https://pokeapi.co
 
 The requirements for this project are as follows:
 
-1. Establish a `Pokemon` class with members for the Pokemon's name, spriteUrl, ID, abilities, and types. You may use app.quicktype.io to help.
+1. Establish a `Pokemon` class with members for the Pokemon's name, spriteUrl, id, abilities, and types. You may use app.quicktype.io to help.
 2. Display a list of matching Pokemon and show the sprite (image) associated with the record.
 3. Allow the user to save the Pokemon. Display a list of searched Pokemon in a scroll view. (**Stretch:** Implement a RecyclerView for the list with the sprites.)
 4. Allow the user to view a Pokemon's information in a detail activity.
