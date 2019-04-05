@@ -1,3 +1,4 @@
+﻿Spencer Stock
 # Android_Sprint3_Challenge
 # Pokemon API
 
