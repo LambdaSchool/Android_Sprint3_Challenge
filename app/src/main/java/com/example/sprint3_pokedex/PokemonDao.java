@@ -18,14 +18,14 @@ public class PokemonDao {
     private static String URL_ENDING = "/.json";
     private static String READ_POKEMON_BY_NUM = BASE_URL + "/%d" + URL_ENDING;
 
-    public static ArrayList<Pokemon> getPokemon(int num) {
+    public static Pokemon getPokemon(int num) {
 
         String[] elementType = {"", ""};
         String imageURL = "";
         int number = num;
         String name = "";
         String[] moves = null;
-        final ArrayList<Pokemon> resultList = new ArrayList<>();
+        Pokemon pokemon = null;
 
         final String result = NetworkAdapter.httpRequest(String.format(READ_POKEMON_BY_NUM, num));
         try {
@@ -61,23 +61,38 @@ public class PokemonDao {
                 e.printStackTrace();
             }
 
-            resultList.add(new Pokemon(elementType, imageURL, number, name, moves));
+            pokemon = new Pokemon(elementType, imageURL, number, name, moves);
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return resultList;
+        return pokemon;
     }
 
 
-    public static Bitmap bitmapFromURL (String imageURl){
+    public static Bitmap bitmapFromURL(String imageURl) {
         Bitmap image = null;
 
         try {
             URL url = new URL(imageURl);
             image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-        }catch (IOException e){e.printStackTrace();}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return image;
+    }
+
+    public static void addPokemonToFavorites(Pokemon pokemon) {
+        PokemonFavoriteRepo.addToList(pokemon);
+    }
+
+    public static String[] getPokemonNames() {
+        String[] names = PokemonFavoriteRepo.getPokeNames();
+        return names;
+    }
+
+    public static void removePokemon(String name) {
+        PokemonFavoriteRepo.removeFromListByName(name);
     }
 }

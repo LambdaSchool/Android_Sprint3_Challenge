@@ -7,7 +7,6 @@ public class Pokemon {
     private int number;
     private String name;
     private String[] moves;
-    private boolean isFavorite = false;
 
     public Pokemon(String[] elementType, String imageURL, int number, String name, String[] moves) {
         this.elementType = elementType;
@@ -17,13 +16,6 @@ public class Pokemon {
         this.moves = moves;
     }
 
-    public boolean isFavorite() {
-        return isFavorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
-    }
 
     public String[] getElementType() {
         return elementType;
