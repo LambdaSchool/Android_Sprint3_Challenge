@@ -29,13 +29,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // search results recycler view
         RecyclerView recyclerView = findViewById(R.id.recycler_view_pokemon_search_results);
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        pokemonSearchResultsAdapter = new PokemonSearchResultsAdapter(this);
+        pokemonSearchResultsAdapter = new PokemonSearchResultsAdapter();
         recyclerView.setAdapter(pokemonSearchResultsAdapter);
 
         // edit text search
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // download pokemon names
         enableSearch(false); // disable search until pokemon names are downloaded
         DownloadPokemonNamesAsyncTask downloadPokemonNamesAsyncTask = new DownloadPokemonNamesAsyncTask();
         downloadPokemonNamesAsyncTask.execute();
@@ -90,15 +92,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openPokemonDetails(String pokemonName) {
-        enableSearch(false); // disable search
-
         @SuppressLint("StaticFieldLeak")
         DownloadPokemonAsyncTask downloadPokemonAsyncTask = new DownloadPokemonAsyncTask() {
             @Override
             protected void onPostExecute(Pokemon pokemon) {
                 super.onPostExecute(pokemon);
-
-                enableSearch(true);
 
                 if (pokemon == null) {
                     return;
@@ -172,8 +170,6 @@ public class MainActivity extends AppCompatActivity {
             return PokemonNetworkDAO.getPokemon(Integer.toString(integers[0]));
         }
     }
-
-
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.israel.sprint3;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +13,9 @@ import java.util.ArrayList;
 
 public class PokemonSearchResultsAdapter extends RecyclerView.Adapter<PokemonSearchResultsAdapter.ViewHolder> {
 
-    public PokemonSearchResultsAdapter(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public PokemonSearchResultsAdapter() {
     }
 
-    private MainActivity mainActivity;
     private ArrayList<String> pokemonNames = new ArrayList<>();
 
     public void setPokemonNames(ArrayList<String> pokemonNames) {
@@ -34,10 +33,11 @@ public class PokemonSearchResultsAdapter extends RecyclerView.Adapter<PokemonSea
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         final String pokemonName = pokemonNames.get(i);
 
+        final Context context = viewHolder.pokemonNameTextView.getContext();
         viewHolder.pokemonNameTextView.setText(pokemonName);
 
         // set bg color if favorite
-        if (FavoritePokemonSPDAO.isFavoritePokemon(mainActivity, pokemonName)) {
+        if (FavoritePokemonSPDAO.isFavoritePokemon(context, pokemonName)) {
             viewHolder.pokemonNameTextView.setBackgroundColor(Color.argb(100, 255, 255, 0));
         } else {
             viewHolder.pokemonNameTextView.setBackgroundColor(Color.argb(0, 0, 0, 0));
@@ -46,7 +46,7 @@ public class PokemonSearchResultsAdapter extends RecyclerView.Adapter<PokemonSea
         viewHolder.pokemonNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity.openPokemonDetails(pokemonName);
+                PokemonDetailsController.openPokemonDetails(v.getContext(), pokemonName);
             }
         });
 
@@ -55,10 +55,10 @@ public class PokemonSearchResultsAdapter extends RecyclerView.Adapter<PokemonSea
             public boolean onLongClick(View v) {
 
                 // add/remove from favorites
-                if (FavoritePokemonSPDAO.isFavoritePokemon(mainActivity, pokemonName)) {
-                    FavoritePokemonSPDAO.removeFavoritePokemon(mainActivity, pokemonName);
+                if (FavoritePokemonSPDAO.isFavoritePokemon(context, pokemonName)) {
+                    FavoritePokemonSPDAO.removeFavoritePokemon(context, pokemonName);
                 } else {
-                    FavoritePokemonSPDAO.addFavoritePokemon(mainActivity, pokemonName);
+                    FavoritePokemonSPDAO.addFavoritePokemon(context, pokemonName);
                 }
 
                 notifyItemChanged(viewHolder.getAdapterPosition());
