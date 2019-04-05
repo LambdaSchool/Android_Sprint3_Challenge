@@ -32,11 +32,11 @@ public class MainActivity extends AppCompatActivity  {
         prefs = getSharedPreferences("pokemon",Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = prefs.edit();
         savedList = new ArrayList<>();
-        nextID = 1;
         context = this;
-        savedListLayout = findViewById(R.id.poke_saved_list);
+        savedListLayout = findViewById(R.id.poke_saved_list_layout);
         searchButton = findViewById(R.id.search_button);
         pokeSearch = findViewById(R.id.edit_text);
+        nextID = 1;
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
