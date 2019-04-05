@@ -20,46 +20,47 @@
         android:id="@+id/poke_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="20dp"
         android:text="Name"
         android:textColor="@android:color/black"
-        android:textSize="25dp" />
+        android:textSize="25dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_text" />
 
     <TextView
         android:id="@+id/poke_num"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="Number" />
+        android:text="Number"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_text" />
 
     <TextView
         android:id="@+id/poke_type1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toLeftOf="@id/poke_type2"
+        android:text="Type1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/poke_name"
-        android:text="Type1"/>
+        app:layout_constraintRight_toLeftOf="@id/poke_type2"
+        app:layout_constraintTop_toBottomOf="@id/poke_name" />
 
     <TextView
         android:id="@+id/poke_type2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Type2"
         app:layout_constraintLeft_toRightOf="@id/poke_type1"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/poke_name"
-        android:text="Type2" />
+        app:layout_constraintTop_toBottomOf="@id/poke_name" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         app:layout_constraintTop_toBottomOf="@id/poke_type1">
+
         <LinearLayout
             android:id="@+id/scrollview_ll"
             android:layout_width="match_parent"
@@ -69,9 +70,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="MOVES:"
-                android:textColor="#000"/>
+                android:textColor="#000" />
         </LinearLayout>
     </ScrollView>
 
+    <EditText
+        android:id="@+id/search_text"
+        android:layout_width="0dp"
+        android:hint="Enter Pokemon Number"
+        android:layout_margin="15dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/search_button"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/search_text"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
