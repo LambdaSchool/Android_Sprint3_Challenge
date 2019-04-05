@@ -82,6 +82,24 @@ public class MainActivity extends AppCompatActivity {
         DownloadPokemonNamesAsyncTask downloadPokemonNamesAsyncTask = new DownloadPokemonNamesAsyncTask();
         downloadPokemonNamesAsyncTask.execute();
 
+        // favorite pokemons
+        Button favoritePokemonsButton = findViewById(R.id.button_favorite_pokemons);
+        favoritePokemonsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, FavoritePokemonsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        // reset to update favorited pokemons highlight
+        pokemonSearchResultsAdapter.notifyDataSetChanged();
     }
 
     private void enableSearch(boolean enable) {
