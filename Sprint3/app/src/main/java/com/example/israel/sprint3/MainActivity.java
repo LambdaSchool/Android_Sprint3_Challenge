@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         // edit text search
         pokemonSearchEditText = findViewById(R.id.edit_text_pokemon_search);
+        pokemonSearchEditText.setHint("Downloading pokemon names...");
         pokemonSearchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -84,7 +85,9 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+            pokemonSearchEditText.setHint("Pokemon name or id");
             enableSearch(true);
+
         }
     }
 

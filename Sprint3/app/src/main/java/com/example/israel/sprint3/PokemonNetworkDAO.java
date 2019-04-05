@@ -36,7 +36,6 @@ public class PokemonNetworkDAO {
         // do not return partial list
         try {
             ArrayList<String> outNames = new ArrayList<>();
-            // TODO
             String nextUrl = BASE_URL + POKEMON;
             while(true) {
                 String pokemonsJsonStr = NetworkAdapter.httpRequestGET(nextUrl);

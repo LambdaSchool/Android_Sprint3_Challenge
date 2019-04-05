@@ -47,7 +47,7 @@ public class PokemonNamesRepository {
             }
         }
 
-        return pokemonNames;
+        return outPokemonNames;
     }
 
 }

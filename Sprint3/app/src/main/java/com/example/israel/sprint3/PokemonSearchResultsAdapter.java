@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class PokemonSearchResultsAdapter extends RecyclerView.Adapter<PokemonSearchResultsAdapter.ViewHolder> {
 
-    private ArrayList<String> pokemonNames;
+    private ArrayList<String> pokemonNames = new ArrayList<>();
 
     public void setPokemonNames(ArrayList<String> pokemonNames) {
         this.pokemonNames = pokemonNames;
