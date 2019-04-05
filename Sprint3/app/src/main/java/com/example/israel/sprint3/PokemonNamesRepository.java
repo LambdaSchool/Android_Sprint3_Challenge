@@ -27,7 +27,6 @@ public class PokemonNamesRepository {
             return outPokemonNames;
         }
 
-
         int inPokemonNameLength = inPokemonName.length();
         for (String pokemonName : pokemonNames) {
             if (pokemonName.length() < inPokemonNameLength) {

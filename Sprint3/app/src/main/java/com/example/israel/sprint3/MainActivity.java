@@ -1,5 +1,7 @@
 package com.example.israel.sprint3;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String KEY_EXTRA_POKEMON = "pokemon";
+
     EditText pokemonSearchEditText;
     Button pokemonSearchButton;
 
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        final PokemonSearchResultsAdapter pokemonSearchResultsAdapter = new PokemonSearchResultsAdapter();
+        final PokemonSearchResultsAdapter pokemonSearchResultsAdapter = new PokemonSearchResultsAdapter(this);
         recyclerView.setAdapter(pokemonSearchResultsAdapter);
 
         // edit text search
@@ -73,7 +77,32 @@ public class MainActivity extends AppCompatActivity {
         pokemonSearchButton.setEnabled(enable);
     }
 
-    public class DownloadPokemonNamesAsyncTask extends AsyncTask<Void, Void, Void> {
+    public void openPokemonDetails(String pokemonName) {
+        enableSearch(false);
+
+        @SuppressLint("StaticFieldLeak")
+        DownloadPokemonAsyncTask downloadPokemonAsyncTask = new DownloadPokemonAsyncTask() {
+            @Override
+            protected void onPostExecute(Pokemon pokemon) {
+                super.onPostExecute(pokemon);
+
+                enableSearch(true);
+
+                if (pokemon == null) {
+                    return;
+                }
+
+                // open details activity
+                Intent intent = new Intent(MainActivity.this, PokemonDetailsActivity.class);
+                intent.putExtra(KEY_EXTRA_POKEMON, pokemon);
+                startActivity(intent);
+            }
+        };
+
+        downloadPokemonAsyncTask.execute(pokemonName);
+    }
+
+    private class DownloadPokemonNamesAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -89,6 +118,15 @@ public class MainActivity extends AppCompatActivity {
             enableSearch(true);
 
         }
+    }
+
+    private class DownloadPokemonAsyncTask extends AsyncTask<String, Void, Pokemon> {
+
+        @Override
+        protected Pokemon doInBackground(String... strings) {
+            return PokemonNetworkDAO.getPokemon(strings[0]);
+        }
+
     }
 
 

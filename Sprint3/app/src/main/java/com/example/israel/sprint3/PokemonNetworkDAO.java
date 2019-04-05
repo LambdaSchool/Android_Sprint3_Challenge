@@ -1,5 +1,6 @@
 package com.example.israel.sprint3;
 
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 

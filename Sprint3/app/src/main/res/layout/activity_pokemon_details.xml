@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PokemonDetailsActivity">
+
+    <ImageView
+        android:id="@+id/image_view_pokemon_sprite"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_pokemon_detail_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Id: 1"
+        app:layout_constraintTop_toBottomOf="@+id/image_view_pokemon_sprite" />
+
+    <TextView
+        android:id="@+id/text_view_pokemon_detail_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name: Bulbasaur"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_pokemon_detail_id" />
+
+    <TextView
+        android:id="@+id/text_view_pokemon_detail_types"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Types: Wind, Water"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_pokemon_detail_name" />
+
+    <TextView
+        android:id="@+id/text_view_pokemon_detail_abilities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Abilities: A, B, C"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_pokemon_detail_types" />
+
+</android.support.constraint.ConstraintLayout>

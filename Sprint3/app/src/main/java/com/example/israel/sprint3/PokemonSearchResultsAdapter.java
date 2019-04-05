@@ -11,6 +11,11 @@ import java.util.ArrayList;
 
 public class PokemonSearchResultsAdapter extends RecyclerView.Adapter<PokemonSearchResultsAdapter.ViewHolder> {
 
+    public PokemonSearchResultsAdapter(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
+
+    private MainActivity mainActivity;
     private ArrayList<String> pokemonNames = new ArrayList<>();
 
     public void setPokemonNames(ArrayList<String> pokemonNames) {
@@ -26,7 +31,7 @@ public class PokemonSearchResultsAdapter extends RecyclerView.Adapter<PokemonSea
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        String pokemonName = pokemonNames.get(i);
+        final String pokemonName = pokemonNames.get(i);
 
         viewHolder.pokemonNameTextView.setText(pokemonName);
 
@@ -34,6 +39,7 @@ public class PokemonSearchResultsAdapter extends RecyclerView.Adapter<PokemonSea
             @Override
             public void onClick(View v) {
                 // TODO pokemon details
+                mainActivity.openPokemonDetails(pokemonName);
             }
         });
     }
