@@ -2,6 +2,7 @@ package com.example.android_sprint3_challenge;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
 
 public class DetailView extends AppCompatActivity {
     Pokemon pokemon;
@@ -36,6 +40,14 @@ public class DetailView extends AppCompatActivity {
         Intent intent = getIntent();
         final String pokeNumber = intent.getStringExtra(MainActivity.POKEMON_NUMBER_EXTRA);
         //Creating Pokemon TODO: Create asynctask
+
+        int resId = getResId("cry" + pokeNumber);
+        try {
+            MediaPlayer mediaPlayer = MediaPlayer.create(context, resId);
+            mediaPlayer.start();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         new Thread(new Runnable() {
             @Override
@@ -65,7 +77,22 @@ public class DetailView extends AppCompatActivity {
 
 
 
+
+
     }
+
+    public static int getResId(String resName) { //function for programmatically getting ResId as int
+
+        try {
+            Field idField = R.raw.class.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+
 
 /*    class getPokemon extends AsyncTask<String, Integer, String> {
 
