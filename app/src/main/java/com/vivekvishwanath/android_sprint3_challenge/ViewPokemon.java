@@ -2,12 +2,15 @@ package com.vivekvishwanath.android_sprint3_challenge;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class ViewPokemon extends AppCompatActivity {
 
@@ -35,6 +38,35 @@ public class ViewPokemon extends AppCompatActivity {
 
         Intent intent = getIntent();
         pokemon = intent.getParcelableExtra("pokemon");
-        int i = 0;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Bitmap sprite = PokemonDao.getPokemonSprite(pokemon.getSpriteUrl());
+                final String moves = parseToNewLines(pokemon.getMoves());
+                final String types = parseToNewLines(pokemon.getTypes());
+                final String abilities = parseToNewLines(pokemon.getAbilities());
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        pokemonName.setText(pokemon.getName().toUpperCase());
+                        pokemonId.setText(Integer.toString(pokemon.getId()));
+                        pokemonSprite.setImageBitmap(sprite);
+                        pokemonMovesView.setText(moves);
+                        pokemonTypesView.setText(types);
+                        pokemonAbilitiesView.setText(abilities);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private static String parseToNewLines(ArrayList<String> list) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            builder.append(list.get(i)).append("\n");
+        }
+        return  builder.toString();
     }
 }
