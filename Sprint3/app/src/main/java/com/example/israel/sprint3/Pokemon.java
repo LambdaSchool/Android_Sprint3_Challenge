@@ -35,7 +35,13 @@ public class Pokemon implements Serializable {
         // abilities
         try {
             JSONArray abilityInfoJsonArr = pokemonJson.getJSONArray("abilities");
-            // TODO
+            if (abilityInfoJsonArr != null) {
+                for (int i = 0; i < abilityInfoJsonArr.length(); ++i) {
+                    JSONObject abilityInfoJson = abilityInfoJsonArr.getJSONObject(i);
+                    JSONObject abilityJson = abilityInfoJson.getJSONObject("ability");
+                    abilities.add(abilityJson.getString("name"));
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -43,7 +49,13 @@ public class Pokemon implements Serializable {
         // types
         try {
             JSONArray typeInfoJsonArr = pokemonJson.getJSONArray("types");
-            // TODO
+            if (typeInfoJsonArr != null) {
+                for (int i = 0; i < typeInfoJsonArr.length(); ++i) {
+                    JSONObject typeInfoJson = typeInfoJsonArr.getJSONObject(i);
+                    JSONObject typeJson = typeInfoJson.getJSONObject("type");
+                    types.add(typeJson.getString("name"));
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -52,8 +64,8 @@ public class Pokemon implements Serializable {
     private int id;
     private String name;
     private String spriteUrl;
-    private ArrayList<String> abilities;
-    private ArrayList<String> types;
+    private ArrayList<String> abilities = new ArrayList<>();
+    private ArrayList<String> types = new ArrayList<>();
 
     public int getId() {
         return id;

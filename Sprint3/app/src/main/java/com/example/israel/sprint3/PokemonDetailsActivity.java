@@ -18,13 +18,38 @@ public class PokemonDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Pokemon pokemon = (Pokemon)intent.getSerializableExtra(MainActivity.KEY_EXTRA_POKEMON);
 
+        // id
         TextView pokemonIdTextView = findViewById(R.id.text_view_pokemon_detail_id);
         pokemonIdTextView.setText("Id: " + Integer.toString(pokemon.getId()));
+
+        // name
         TextView pokemonNameTextView = findViewById(R.id.text_view_pokemon_detail_name);
         pokemonNameTextView.setText("Name: " + pokemon.getName());
-        TextView pokemonTypesTextView = findViewById(R.id.text_view_pokemon_detail_types);
-        TextView pokemonAbilitiesTextView = findViewById(R.id.text_view_pokemon_detail_abilities);
 
+        // types
+        TextView pokemonTypesTextView = findViewById(R.id.text_view_pokemon_detail_types);
+        StringBuilder typesStrB = new StringBuilder();
+        typesStrB.append("Types: ");
+        String delimiter = ", ";
+        for (String type : pokemon.getTypes()) {
+            typesStrB.append(type);
+            typesStrB.append(delimiter);
+        }
+        typesStrB.setLength(typesStrB.length() - delimiter.length());
+        pokemonTypesTextView.setText(typesStrB.toString());
+
+        // abilities
+        TextView pokemonAbilitiesTextView = findViewById(R.id.text_view_pokemon_detail_abilities);
+        StringBuilder abilitiesStrB = new StringBuilder();
+        abilitiesStrB.append("Abilities: ");
+        for (String ability : pokemon.getAbilities()) {
+            abilitiesStrB.append(ability);
+            abilitiesStrB.append(delimiter);
+        }
+        abilitiesStrB.setLength(abilitiesStrB.length() - delimiter.length());
+        pokemonAbilitiesTextView.setText(abilitiesStrB.toString());
+
+        // sprite
         DownloadPokemonSpriteAsyncTask downloadPokemonSpriteAsyncTask = new DownloadPokemonSpriteAsyncTask();
         downloadPokemonSpriteAsyncTask.execute(pokemon.getSpriteUrl());
     }
