@@ -9,10 +9,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
 
+    LinearLayout linearLayoutMain;
     private Pokemon pokemon;
 
     @Override
@@ -20,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        linearLayoutMain = findViewById(R.id.linear_layout);
         Button button = findViewById(R.id.button_go);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,8 +43,36 @@ public class MainActivity extends AppCompatActivity {
                                         textView.setPadding(5, 5, 5, 0);
                                         textView.setTextSize(18);
                                         textView.setText(pokemon.getId() + ": " + pokemon.getName());
-                                        LinearLayout linearLayout = findViewById(R.id.linear_layout);
-                                        linearLayout.addView(textView);
+                                        textView.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                String pokemonListing = ((TextView) v).getText().toString();
+                                                final String listingEnd = pokemonListing.substring(pokemonListing.indexOf(": ") + 2);
+
+                                                new Thread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        final Pokemon pokemonClicked = PokemonDao.getAPokemon(listingEnd);
+                                                        runOnUiThread(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                Intent intent = new Intent(getApplicationContext(), PokemonDetails.class);
+                                                                intent.putExtra("pokemon", pokemonClicked);
+                                                                startActivity(intent);
+                                                            }
+                                                        });
+                                                    }
+                                                }).start();
+                                            }
+                                        });
+                                        textView.setOnLongClickListener(new View.OnLongClickListener() {
+                                            @Override
+                                            public boolean onLongClick(View v) {
+                                                linearLayoutMain.removeView(v);
+                                                return true;
+                                            }
+                                        });
+                                        linearLayoutMain.addView(textView);
 
                                         Intent intent = new Intent(getApplicationContext(), PokemonDetails.class);
                                         intent.putExtra("pokemon", pokemon);
