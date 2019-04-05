@@ -1,6 +1,7 @@
 package com.vivekvishwanath.android_sprint3_challenge;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
                         Pokemon pokemon = new Pokemon(PokemonDao.getPokemon(nameOrId));
                         searchedPokemon.add(pokemon);
                         pokemonListAdapter.notifyItemInserted(searchedPokemon.size() - 1);
+                        Intent intent = new Intent(context, ViewPokemon.class);
+                        intent.putExtra("pokemon", pokemon);
+                        startActivity(intent);
                     }
                 }).start();
             }
