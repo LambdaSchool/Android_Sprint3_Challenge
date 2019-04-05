@@ -18,8 +18,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String KEY_EXTRA_POKEMON = "pokemon";
-
     PokemonSearchResultsAdapter pokemonSearchResultsAdapter;
     EditText pokemonSearchEditText;
     Button pokemonSearchButton;
@@ -91,27 +89,6 @@ public class MainActivity extends AppCompatActivity {
         pokemonSearchButton.setEnabled(enable);
     }
 
-    public void openPokemonDetails(String pokemonName) {
-        @SuppressLint("StaticFieldLeak")
-        DownloadPokemonAsyncTask downloadPokemonAsyncTask = new DownloadPokemonAsyncTask() {
-            @Override
-            protected void onPostExecute(Pokemon pokemon) {
-                super.onPostExecute(pokemon);
-
-                if (pokemon == null) {
-                    return;
-                }
-
-                // open details activity
-                Intent intent = new Intent(MainActivity.this, PokemonDetailsActivity.class);
-                intent.putExtra(KEY_EXTRA_POKEMON, pokemon);
-                startActivity(intent);
-            }
-        };
-
-        downloadPokemonAsyncTask.execute(pokemonName);
-    }
-
     private void searchPokemonById(int pokemonId) {
         enableSearch(false); // disable search
 
@@ -152,15 +129,6 @@ public class MainActivity extends AppCompatActivity {
             enableSearch(true);
 
         }
-    }
-
-    private class DownloadPokemonAsyncTask extends AsyncTask<String, Void, Pokemon> {
-
-        @Override
-        protected Pokemon doInBackground(String... strings) {
-            return PokemonNetworkDAO.getPokemon(strings[0]);
-        }
-
     }
 
     private class DownloadPokemonByIdAsyncTask extends AsyncTask<Integer, Void, Pokemon> {

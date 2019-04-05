@@ -18,7 +18,7 @@ public class PokemonDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pokemon_details);
 
         Intent intent = getIntent();
-        Pokemon pokemon = (Pokemon)intent.getSerializableExtra(MainActivity.KEY_EXTRA_POKEMON);
+        Pokemon pokemon = (Pokemon)intent.getSerializableExtra(PokemonDetailsController.KEY_EXTRA_POKEMON);
 
         // id
         TextView pokemonIdTextView = findViewById(R.id.text_view_pokemon_detail_id);
