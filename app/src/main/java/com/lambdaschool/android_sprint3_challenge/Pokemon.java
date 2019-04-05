@@ -1,11 +1,14 @@
 package com.lambdaschool.android_sprint3_challenge;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.*;
 
-public class Pokemon {
+public class Pokemon implements Parcelable {
     private String name;
     private int id;
     private int height;
@@ -20,61 +23,95 @@ public class Pokemon {
             this.name = jsonObject.getString("name");
         } catch (JSONException e) {
             e.printStackTrace();
+            this.name = "";
         }
         try {
             this.id = jsonObject.getInt("id");
         } catch (JSONException e) {
             e.printStackTrace();
+            this.id = -1;
         }
         try {
             this.height = jsonObject.getInt("height");
         } catch (JSONException e) {
             e.printStackTrace();
+            this.height = -1;
         }
         try {
             this.weight = jsonObject.getInt("weight");
         } catch (JSONException e) {
             e.printStackTrace();
+            this.weight = -1;
         }
         try {
             this.sprite = jsonObject.getJSONObject("sprites").getString("front_default");
         } catch (JSONException e) {
             e.printStackTrace();
+            this.sprite = "";
         }
         try {
             for (int i = 0; i < jsonObject.getJSONArray("abilities").length(); i++) {
                 try {
-                    abilities.add(jsonObject.getJSONArray("abilities").getJSONObject(i).getString("name"));
+                    this.abilities.add(jsonObject.getJSONArray("abilities").getJSONObject(i).getString("name"));
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    this.abilities.add("");
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            this.abilities = new ArrayList<>();
         }
         try {
             for (int i = 0; i < jsonObject.getJSONArray("moves").length(); i++) {
                 try {
-                    abilities.add(jsonObject.getJSONArray("moves").getJSONObject(i).getString("name"));
+                    this.moves.add(jsonObject.getJSONArray("moves").getJSONObject(i).getString("name"));
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    this.moves.add("");
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            this.moves = new ArrayList<>();
         }
         try {
             for (int i = 0; i < jsonObject.getJSONArray("types").length(); i++) {
                 try {
-                    abilities.add(jsonObject.getJSONArray("types").getJSONObject(i).getString("name"));
+                    this.types.add(jsonObject.getJSONArray("types").getJSONObject(i).getString("name"));
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    this.types.add("");
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            this.types = new ArrayList<>();
         }
     }
+
+    protected Pokemon(Parcel in) {
+        name = in.readString();
+        id = in.readInt();
+        height = in.readInt();
+        weight = in.readInt();
+        sprite = in.readString();
+        abilities = in.createStringArrayList();
+        moves = in.createStringArrayList();
+        types = in.createStringArrayList();
+    }
+
+    public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {
+        @Override
+        public Pokemon createFromParcel(Parcel in) {
+            return new Pokemon(in);
+        }
+
+        @Override
+        public Pokemon[] newArray(int size) {
+            return new Pokemon[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -138,5 +175,22 @@ public class Pokemon {
 
     public void setMoves(ArrayList<String> moves) {
         this.moves = moves;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(id);
+        dest.writeInt(height);
+        dest.writeInt(weight);
+        dest.writeString(sprite);
+        dest.writeStringList(abilities);
+        dest.writeStringList(moves);
+        dest.writeStringList(types);
     }
 }

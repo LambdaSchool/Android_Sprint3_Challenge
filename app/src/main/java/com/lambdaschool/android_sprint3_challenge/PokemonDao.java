@@ -12,7 +12,7 @@ public class PokemonDao {
     private static final String URL_LIST = "pokemon/?offset=01&limit=1200";
     private static final String URL_INDIVIDUAL = "pokemon/";
 
-    public ArrayList<Pokemon> getAllPokemons() {
+    public static ArrayList<Pokemon> getAllPokemons() {
         ArrayList<Pokemon> pokemonArrayList = new ArrayList<>();
         String returnedJsonAsString = NetworkAdapter.httpRequest(URL_BASE + URL_LIST);
         JSONObject jsonObject = null;
@@ -38,11 +38,7 @@ public class PokemonDao {
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
 
-                String pokemonName = jsonArray.getJSONObject(i).getString("name");
-                returnedJsonAsString = NetworkAdapter.httpRequest(URL_BASE + URL_INDIVIDUAL + pokemonName);
-                jsonObject = new JSONObject(returnedJsonAsString);
-                Pokemon pokemon = new Pokemon(jsonObject);
-                pokemonArrayList.add(pokemon);
+                pokemonArrayList.add(getAPokemon(jsonArray.getJSONObject(i).getString("name")));
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -52,4 +48,19 @@ public class PokemonDao {
         return pokemonArrayList;
     }
 
+    public static Pokemon getAPokemon(String nameOrId) {
+        String returnedJsonAsString = NetworkAdapter.httpRequest(URL_BASE + URL_INDIVIDUAL + nameOrId);
+        JSONObject jsonObject = null;
+        try {
+
+            jsonObject = new JSONObject(returnedJsonAsString);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Pokemon pokemon = new Pokemon(jsonObject);
+
+        return pokemon;
+    }
 }
