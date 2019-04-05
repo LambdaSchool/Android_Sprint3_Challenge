@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                                         LinearLayout linearLayout = findViewById(R.id.linear_layout);
                                         linearLayout.addView(textView);
 
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        Intent intent = new Intent(getApplicationContext(), PokemonDetails.class);
                                         intent.putExtra("pokemon", pokemon);
                                         startActivity(intent);
                                     }
