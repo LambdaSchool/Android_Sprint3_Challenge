@@ -54,6 +54,31 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             });
+                            tv.setOnLongClickListener(new View.OnLongClickListener() { //add pokemon from pokedex to saved list by long click
+                                @Override
+                                public boolean onLongClick(View view) {
+                                    final TextView savedtv = new TextView(context);
+                                    savedtv.setText(tv.getText());
+                                    savedtv.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) { //clicking the newly added view
+                                            Intent intent = new Intent(context, DetailView.class);
+                                            intent.putExtra(POKEMON_NUMBER_EXTRA, index);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                    savedtv.setOnLongClickListener(new View.OnLongClickListener() {
+                                        @Override
+                                        public boolean onLongClick(View view) {
+                                            linearLayoutPokeNames.removeView(savedtv);
+                                            return true;
+                                        }
+                                    });
+
+                                    linearLayoutPokeNames.addView(savedtv);
+                                    return true;
+                                }
+                            });
                             linearLayoutPokeDex.addView(tv);
                         }
                         catchButton.setOnClickListener(new View.OnClickListener() {
