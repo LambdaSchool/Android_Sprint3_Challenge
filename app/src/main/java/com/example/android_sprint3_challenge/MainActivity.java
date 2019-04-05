@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailView.class);
                 intent.putExtra(POKEMON_NUMBER_EXTRA, editTextSearch.getText().toString());
+                startActivity(intent);
             }
         });
     }
