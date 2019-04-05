@@ -2,18 +2,15 @@ package com.example.android_sprint3_challenge;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class Pokemon implements Parcelable {
     String name, spriteURL,type1,type2;
     int id;
     ArrayList<String> moves;
-    boolean isSaved;
 
     public Pokemon(String name, String spriteURL, String type1, String type2, int id, ArrayList<String> moves){
         this.name = name;
@@ -26,8 +23,8 @@ public class Pokemon implements Parcelable {
     public Pokemon(JSONObject caught){
         JSONObject temp;
         JSONArray tempAry;
-        this.moves = new ArrayList<String>();
-        String raw = null;
+        this.moves = new ArrayList<>();
+        String raw;
 
         try {
             raw = caught.getString("name");
@@ -74,7 +71,6 @@ public class Pokemon implements Parcelable {
             e.printStackTrace();
         }
 
-        this.isSaved = false;
 
     }
 
@@ -94,9 +90,6 @@ public class Pokemon implements Parcelable {
         return type2;
     }
 
-    public void setSaved(boolean saved) {
-        isSaved = true;
-    }
 
     public int getid() {
         return id;
@@ -142,4 +135,3 @@ public class Pokemon implements Parcelable {
         }
     };
 }
-
