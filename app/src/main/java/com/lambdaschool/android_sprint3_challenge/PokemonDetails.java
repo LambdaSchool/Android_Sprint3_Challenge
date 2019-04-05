@@ -1,6 +1,9 @@
 package com.lambdaschool.android_sprint3_challenge;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -13,7 +16,7 @@ public class PokemonDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon_details);
 
-        Pokemon pokemon = getIntent().getParcelableExtra("pokemon");
+        final Pokemon pokemon = getIntent().getParcelableExtra("pokemon");
 
         ((TextView) findViewById(R.id.text_view_name)).setText(pokemon.getName());
         ((TextView) findViewById(R.id.text_view_id)).setText("ID: " + pokemon.getId());
@@ -38,5 +41,19 @@ public class PokemonDetails extends AppCompatActivity {
             textView.setText(types);
             ((LinearLayout) findViewById(R.id.linear_layout_types)).addView(textView);
         }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Bitmap pokemonImage = PokemonDao.getAPokemonImage(pokemon.getSprite());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        BitmapDrawable bitmapDrawable = new BitmapDrawable(getApplicationContext().getResources(), pokemonImage);
+                        findViewById(R.id.linear_layout_details).setBackground(bitmapDrawable);
+                    }
+                });
+            }
+        }).start();
     }
 }

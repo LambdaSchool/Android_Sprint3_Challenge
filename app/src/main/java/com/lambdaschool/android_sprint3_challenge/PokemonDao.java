@@ -1,5 +1,7 @@
 package com.lambdaschool.android_sprint3_challenge;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,5 +65,9 @@ public class PokemonDao {
         }
 
         return pokemon;
+    }
+
+    public static Bitmap getAPokemonImage(String url) {
+        return NetworkAdapter.httpImageRequest(url);
     }
 }

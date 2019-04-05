@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText editText = findViewById(R.id.edit_text_search);
                 final String textToSearchFor = editText.getText().toString().toLowerCase();
 
-                if(!textToSearchFor.equals("")) {
+                if (!textToSearchFor.equals("")) {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                                         TextView textView = new TextView(getApplicationContext());
                                         textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                                         textView.setPadding(5, 5, 5, 0);
-                                        textView.setTextSize(30);
+                                        textView.setTextSize(18);
                                         textView.setText(pokemon.getId() + ": " + pokemon.getName());
                                         LinearLayout linearLayout = findViewById(R.id.linear_layout);
                                         linearLayout.addView(textView);
