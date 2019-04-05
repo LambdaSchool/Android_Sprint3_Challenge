@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,15 +41,14 @@ public class PokemonDetailsActivity extends AppCompatActivity {
         pokemonTypesTextView.setText(typesStrB.toString());
 
         // abilities
-        TextView pokemonAbilitiesTextView = findViewById(R.id.text_view_pokemon_detail_abilities);
-        StringBuilder abilitiesStrB = new StringBuilder();
-        abilitiesStrB.append("Abilities: ");
-        for (String ability : pokemon.getAbilities()) {
-            abilitiesStrB.append(ability);
-            abilitiesStrB.append(delimiter);
-        }
-        abilitiesStrB.setLength(abilitiesStrB.length() - delimiter.length());
-        pokemonAbilitiesTextView.setText(abilitiesStrB.toString());
+        RecyclerView pokemonAbilitiesRecyclerView = findViewById(R.id.recycler_view_pokemon_detail_abilities);
+        pokemonAbilitiesRecyclerView.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        pokemonAbilitiesRecyclerView.setLayoutManager(layoutManager);
+
+        PokemonAbilitiesAdapter pokemonAbilitiesAdapter = new PokemonAbilitiesAdapter(pokemon.getAbilities());
+        pokemonAbilitiesRecyclerView.setAdapter(pokemonAbilitiesAdapter);
 
         // sprite
         DownloadPokemonSpriteAsyncTask downloadPokemonSpriteAsyncTask = new DownloadPokemonSpriteAsyncTask();
