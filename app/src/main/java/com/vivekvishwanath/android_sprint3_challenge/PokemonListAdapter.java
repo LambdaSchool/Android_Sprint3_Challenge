@@ -1,6 +1,7 @@
 package com.vivekvishwanath.android_sprint3_challenge;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,9 +32,26 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         final Pokemon pokemon = searchedPokemon.get(position);
         holder.pokemonName.setText(pokemon.getName());
+        holder.pokemonListLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ViewPokemon.class);
+                intent.putExtra("pokemon", pokemon);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.pokemonListLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                searchedPokemon.remove(position);
+                notifyItemRemoved(position);
+                return true;
+            }
+        });
     }
 
     @Override
