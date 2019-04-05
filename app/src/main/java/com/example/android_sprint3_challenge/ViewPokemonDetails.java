@@ -39,7 +39,7 @@ public class ViewPokemonDetails extends AppCompatActivity {
 
         Intent intent  = getIntent();
 
-        Pokemon pokemonPicked = intent.getParcelableExtra(MainActivity.POKEMONTAG);
+        Pokemon pokemonPicked = intent.getParcelableExtra(MainActivity.POKEMON_DETAILS);
 
         pokeName.setText(pokemonPicked.getName());
         pokeNum.setText(String.valueOf(pokemonPicked.getid()));

@@ -2,6 +2,7 @@ package com.example.android_sprint3_challenge;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,18 +16,21 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity  {
 
 
-    public static final String POKEMONTAG = "poke_deets";
+    public static final String POKEMON_DETAILS = "pokemonDetails";
     Context context;
     private LinearLayout savedListLayout;
     private Button searchButton;
     private EditText pokeSearch;
     private ArrayList<View> savedList;
     int nextID;
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        prefs = getSharedPreferences("pokemon",Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = prefs.edit();
         savedList = new ArrayList<>();
         nextID = 1;
         context = this;
@@ -46,26 +50,31 @@ public class MainActivity extends AppCompatActivity  {
                         Intent pokeDetailsIntent =  new Intent(context, ViewPokemonDetails.class);
 
                         pokeSearch.setText("");
-                        pokeDetailsIntent.putExtra(POKEMONTAG, pokemon);
+                        pokeDetailsIntent.putExtra(POKEMON_DETAILS, pokemon);
                         startActivity(pokeDetailsIntent);
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                final TextView tv = new TextView(context);
-                                tv.setId(nextID);
-                                tv.setText(pokemon.getName());
-                                tv.setTextSize(40);
-                                tv.setOnClickListener(new View.OnClickListener() {
+                                final TextView textView = new TextView(context);
+                                textView.setId(nextID);
+                                textView.setText(pokemon.getName());
+                                final String idKey = String.valueOf(nextID);
+                                textView.setTextSize(40);
+                                textView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         Intent pokeDetailsIntent =  new Intent(context, ViewPokemonDetails.class);
-                                        pokeDetailsIntent.putExtra(POKEMONTAG, pokemon);
+                                        pokeDetailsIntent.putExtra(POKEMON_DETAILS, pokemon);
                                         startActivity(pokeDetailsIntent);
-                                        savedList.remove(tv);
+                                        savedList.remove(textView);
+                                        editor.remove(idKey);
+                                        editor.apply();
                                     }
                                 });
-                                savedList.add(tv);
+                                savedList.add(textView);
+                                editor.putString(idKey,pokemon.name );
+                                editor.apply();
                             }
                         });
                     }
