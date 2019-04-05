@@ -1,5 +1,7 @@
 package com.example.sprint3_pokedex;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,6 +10,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class NetworkAdapter {
 
@@ -21,13 +25,15 @@ public class NetworkAdapter {
     static String httpRequest(String urlString, Map<String, String> headerProperties) {
         String result = "";
         InputStream inputStream = null;
-        HttpURLConnection connection = null;
+        HttpsURLConnection connection = null;
 
         try {
             URL url = new URL(urlString);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(CONNECT_TIMEOUT);
-            connection.setReadTimeout(READ_TIMEOUT);
+
+            Log.i("test2", url.toString());
+            connection = (HttpsURLConnection) url.openConnection();
+           // connection.setConnectTimeout(CONNECT_TIMEOUT);
+           // connection.setReadTimeout(READ_TIMEOUT);
 
             if(headerProperties!=null) {
                 for(Map.Entry<String, String> entry : headerProperties.entrySet()){
@@ -37,7 +43,7 @@ public class NetworkAdapter {
             connection.connect();
 
             final int responseCode = connection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
                 inputStream = connection.getInputStream();
                 if (inputStream != null) {
                     InputStreamReader isReader = new InputStreamReader(inputStream);

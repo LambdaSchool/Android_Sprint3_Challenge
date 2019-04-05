@@ -12,7 +12,7 @@ public class PokemonFavoriteRepo {
     public static void removeFromList(int num){
         for(int i = 0; i < pokemons.size(); i++){
             if(pokemons.get(i).getNumber() == num){
-                pokemons.remove(num);
+                pokemons.remove(i);
             }
         }
     }
@@ -42,6 +42,14 @@ public class PokemonFavoriteRepo {
             }
         }
         return null;
+    }
+
+    public static boolean checkForExistingPokemon(int num){
+        for(int i = 0; i < pokemons.size(); i++){
+            if(pokemons.get(i).getNumber() == num){
+                return true;
+            }
+        }return  false;
     }
 
     public static void removeFromListByName(String name) {

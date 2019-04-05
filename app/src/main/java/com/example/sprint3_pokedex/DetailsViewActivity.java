@@ -1,5 +1,6 @@
 package com.example.sprint3_pokedex;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -18,7 +19,8 @@ public class DetailsViewActivity extends AppCompatActivity {
     TextView tvName;
     TextView tvNum;
     Pokemon pokemon;
-    int pokemonNum;
+    String pokemonName;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,28 +33,32 @@ public class DetailsViewActivity extends AppCompatActivity {
         tvType2 = findViewById(R.id.poke_type2);
         ivImage = findViewById(R.id.poke_image);
         ll = findViewById(R.id.scrollview_ll_details_view);
+        pokemonName = "0";
+        context = this;
 
-        pokemonNum = intent.getIntExtra("number",0);
+        pokemonName = intent.getStringExtra("poke_key");
 
-        if(pokemonNum == 0){
+        if(pokemonName == "0"){
             onBackPressed();
         }
 
-        pokemon = PokemonFavoriteRepo.getPokemon(pokemonNum);
+        pokemon = PokemonFavoriteRepo.getPokemonByName(pokemonName);
 
         for(int i = 0; i < pokemon.getMoves().length; i++){
             ll.addView(createTextView(pokemon.getMoves()[i]));
         }
         tvName.setText(pokemon.getName());
 
-        tvNum.setText(pokemonNum);
+        tvNum.setText(String.valueOf(pokemon.getNumber()));
         tvType1.setText(pokemon.getElementType()[0]);
         tvType2.setText(pokemon.getElementType()[1]);
+
+       new setImageAsync().execute();
     }
 
 
     public TextView createTextView(String text){
-        TextView textView = new TextView(this);
+        TextView textView = new TextView(context);
         textView.setText(text);
         return textView;
     }

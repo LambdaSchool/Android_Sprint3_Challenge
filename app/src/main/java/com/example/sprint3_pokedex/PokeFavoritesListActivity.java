@@ -2,6 +2,7 @@ package com.example.sprint3_pokedex;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,45 +32,48 @@ public class PokeFavoritesListActivity extends AppCompatActivity {
 
                 final String input = etInput.getText().toString();
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
+                if (!PokemonDao.checkForExisitingPokemon(Integer.parseInt(input))) {
 
-                        PokemonDao.addPokemonToFavorites(PokemonDao.getPokemon(Integer.parseInt(input)));
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
 
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+                            PokemonDao.addPokemonToFavorites(PokemonDao.getPokemon(Integer.parseInt(input)));
 
-                             //   updateList();
-                            }
-                        });
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
 
-                    }
+                                    updateList();
+                                }
+                            });
+
+                        }
 
 
-
-                }).start();
+                    }).start();
+                }
             }
         });
     }
 
+
     private void updateList() {
         ll.removeAllViews();
         String[] names = PokemonDao.getPokemonNames();
-        for(int i = 0; i < names.length; i++){
+        for (int i = 0; i < names.length; i++) {
             ll.addView(createTextView(names[i]));
         }
     }
 
-    public TextView createTextView(String text){
+    public TextView createTextView(String text) {
         final TextView textView = new TextView(this);
         textView.setText(text);
 
         textView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                PokemonDao.removePokemon(textView.getText().toString());
+                PokemonDao.removePokemonByName(textView.getText().toString());
                 updateList();
                 return true;
             }
@@ -81,7 +85,7 @@ public class PokeFavoritesListActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, DetailsViewActivity.class);
                 intent.putExtra(getString(R.string.poke_key), textView.getText().toString());
                 startActivity(intent);
-                }
+            }
         });
         return textView;
     }

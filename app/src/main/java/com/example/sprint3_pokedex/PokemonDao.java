@@ -15,8 +15,8 @@ public class PokemonDao {
 
 
     private static String BASE_URL = "https://pokeapi.co/api/v2/pokemon";
-    private static String URL_ENDING = "/.json";
-    private static String READ_POKEMON_BY_NUM = BASE_URL + "/%s";
+    private static String URL_ENDING = ".json";
+    private static String READ_POKEMON_BY_NUM = BASE_URL + "/%s";// + URL_ENDING;
 
     public static Pokemon getPokemon(int num) {
 
@@ -24,6 +24,7 @@ public class PokemonDao {
         String imageURL = "";
         int number = num;
         String name = "";
+        ArrayList<String> movesArrList = new ArrayList<>();
         String[] moves = null;
         Pokemon pokemon = null;
 
@@ -32,7 +33,7 @@ public class PokemonDao {
             JSONObject jsonObject = new JSONObject(result);
 
             try {
-                name = jsonObject.getJSONObject("forms").getString("name");
+                name = jsonObject.getString("name");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -55,13 +56,15 @@ public class PokemonDao {
             try {
                 JSONArray jsonArray = jsonObject.getJSONArray("moves");
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    moves[i] = jsonArray.getJSONObject(i).getJSONObject("move").getString("name");
+                    movesArrList.add(jsonArray.getJSONObject(i).getJSONObject("move").getString("name"));
                 }
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            pokemon = new Pokemon(elementType, imageURL, number, name, moves);
+            pokemon = new Pokemon(elementType, imageURL, number, name, movesArrList);
 
 
         } catch (JSONException e) {
@@ -93,6 +96,14 @@ public class PokemonDao {
     }
 
     public static void removePokemon(String name) {
+        PokemonFavoriteRepo.removeFromListByName(name);
+    }
+
+    public static boolean checkForExisitingPokemon(int num){
+       return PokemonFavoriteRepo.checkForExistingPokemon(num);
+    }
+
+    public static void removePokemonByName(String name) {
         PokemonFavoriteRepo.removeFromListByName(name);
     }
 }
