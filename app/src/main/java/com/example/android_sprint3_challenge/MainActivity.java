@@ -14,12 +14,13 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static final String POKEMON_NUMBER_EXTRA = "POKEMON_NUMBER";
-    Button searchButton;
+    Button catchButton;
     EditText editTextSearch;
     Context context;
     LinearLayout linearLayoutPokeNames;
+    LinearLayout linearLayoutPokeDex;
 
-    ArrayList<String> savedPokemon = new ArrayList<>();
+    //ArrayList<String> savedPokemon = new ArrayList<>(); //For use with permanence
     ArrayList<String> pokeNames = new ArrayList<>();
 
     @Override
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         linearLayoutPokeNames = findViewById(R.id.linear_layout_scroll_child_name_list);
-        searchButton = findViewById(R.id.search_button);
+        linearLayoutPokeDex = findViewById(R.id.linear_layout_scroll_child_pokedex_list);
+        catchButton = findViewById(R.id.button_catch);
         editTextSearch = findViewById(R.id.edit_text_search);
         context = this;
 
@@ -39,14 +41,24 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        for (int i = 0; i < pokeNames.size(); ++i) {
-
-                            //add something to populate pokedex scrollview
-
+                        for (int i = 0; i < pokeNames.size(); ++i) { //populate pokedex scrollview
+                            String pokeViewText = (i+1) + " " + pokeNames.get(i); //creates String for each item in pokenames
+                            final TextView tv = new TextView(context);
+                            tv.setText(pokeViewText);
+                            final String index = String.valueOf(i+1);
+                            tv.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) { //clicking the newly added view
+                                    Intent intent = new Intent(context, DetailView.class);
+                                    intent.putExtra(POKEMON_NUMBER_EXTRA, index);
+                                    startActivity(intent);
+                                }
+                            });
+                            linearLayoutPokeDex.addView(tv);
                         }
-                        searchButton.setOnClickListener(new View.OnClickListener() {
+                        catchButton.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View view) {
+                            public void onClick(View view) { //Creating view for saved pokemon and passing intent
                                 Intent intent = new Intent(context, DetailView.class);
                                 final String pokeNumber = editTextSearch.getText().toString();
                                 int pokeNumberInt = Integer.parseInt(pokeNumber);
@@ -70,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                                 linearLayoutPokeNames.addView(tv);
-                                startActivity(intent);
+                                //startActivity(intent); //ReEnable to go to detailview of caught pokemon on button press
                             }
                         });
                     }

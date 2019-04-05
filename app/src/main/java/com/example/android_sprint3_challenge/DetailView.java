@@ -39,37 +39,40 @@ public class DetailView extends AppCompatActivity {
         //Retrieving Intent
         Intent intent = getIntent();
         final String pokeNumber = intent.getStringExtra(MainActivity.POKEMON_NUMBER_EXTRA);
+
+
+
         //Creating Pokemon TODO: Create asynctask
-
-        int resId = getResId("cry" + pokeNumber);
-        try {
-            MediaPlayer mediaPlayer = MediaPlayer.create(context, resId);
-            mediaPlayer.start();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
         new Thread(new Runnable() {
             @Override
             public void run() {
                 pokemon = PokemonNetworkDao.getSinglePokemon(pokeNumber);
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         imageViewPokeImage.setImageBitmap(pokemon.getImage());
                         textViewPokeName.setText(pokemon.getName());
 
-                        for (String moveName: pokemon.getMoves()) {
+                        for (String moveName: pokemon.getMoves()) { //generates views for moves
                             TextView tv = new TextView(context);
                             tv.setText(moveName);
                             linearLayoutPokeMoves.addView(tv);
                         }
 
-                        for (String typeName: pokemon.getTypes()) {
+                        for (String typeName: pokemon.getTypes()) { //generates views for types
                             TextView tv = new TextView(context);
                             tv.setText(typeName);
                             linearLayoutPokeTypes.addView(tv);
                         }
+                        int resId = getResId("cry" + pokeNumber); //calls function to generate ResId
+                        try {
+                            MediaPlayer mediaPlayer = MediaPlayer.create(context, resId); //plays pokemon cry
+                            mediaPlayer.start();
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
+
                     }
                 });
             }
