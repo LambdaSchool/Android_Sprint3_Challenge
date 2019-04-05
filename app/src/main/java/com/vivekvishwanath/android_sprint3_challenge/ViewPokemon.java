@@ -37,7 +37,7 @@ public class ViewPokemon extends AppCompatActivity {
         pokemonAbilitiesView = findViewById(R.id.pokemon_abilities);
 
         Intent intent = getIntent();
-        pokemon = intent.getParcelableExtra("pokemon");
+        pokemon = intent.getParcelableExtra(Constants.POKEMON_INTENT_KEY);
 
         new Thread(new Runnable() {
             @Override

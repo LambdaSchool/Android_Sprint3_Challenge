@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                                 pokemonListAdapter.notifyItemInserted(searchedPokemon.size() - 1);
                             }
                             Intent intent = new Intent(context, ViewPokemon.class);
-                            intent.putExtra("pokemon", pokemon);
+                            intent.putExtra(Constants.POKEMON_INTENT_KEY, pokemon);
                             startActivity(intent);
                         }
                     }

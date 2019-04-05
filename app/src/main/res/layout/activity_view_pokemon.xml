@@ -19,7 +19,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="Pokemon Name"
                 android:textSize="30sp"
                 android:gravity="center"/>
 
@@ -28,7 +27,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/pokemon_name_view"
-                android:text="ID"
                 android:textSize="26sp"
                 android:gravity="center"/>
             
@@ -53,7 +51,7 @@
                         android:id="@+id/moves_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Moves"
+                        android:text="@string/moves_title"
                         android:textSize="26sp"
                         android:gravity="center"/>
 
@@ -81,7 +79,7 @@
                     android:id="@+id/types_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Types"
+                    android:text="@string/types_title"
                     android:textSize="26sp"
                     android:gravity="center"/>
 
@@ -107,7 +105,7 @@
                     android:id="@+id/abilities_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Abilities"
+                    android:text="@string/abilities_title"
                     android:textSize="26sp"
                     android:gravity="center"/>
 
