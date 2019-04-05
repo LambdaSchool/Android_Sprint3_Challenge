@@ -50,16 +50,17 @@ public class PokemonDao {
 
     public static Pokemon getAPokemon(String nameOrId) {
         String returnedJsonAsString = NetworkAdapter.httpRequest(URL_BASE + URL_INDIVIDUAL + nameOrId);
-        JSONObject jsonObject = null;
+        Pokemon pokemon = null;
+        JSONObject jsonObject;
+
         try {
 
             jsonObject = new JSONObject(returnedJsonAsString);
+            pokemon = new Pokemon(jsonObject);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        Pokemon pokemon = new Pokemon(jsonObject);
 
         return pokemon;
     }

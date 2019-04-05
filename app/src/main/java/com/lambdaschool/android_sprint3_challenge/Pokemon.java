@@ -50,9 +50,10 @@ public class Pokemon implements Parcelable {
             this.sprite = "";
         }
         try {
+            this.abilities = new ArrayList<>();
             for (int i = 0; i < jsonObject.getJSONArray("abilities").length(); i++) {
                 try {
-                    this.abilities.add(jsonObject.getJSONArray("abilities").getJSONObject(i).getString("name"));
+                    this.abilities.add(jsonObject.getJSONArray("abilities").getJSONObject(i).getJSONObject("ability").getString("name"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                     this.abilities.add("");
@@ -60,12 +61,12 @@ public class Pokemon implements Parcelable {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            this.abilities = new ArrayList<>();
         }
         try {
+            this.moves = new ArrayList<>();
             for (int i = 0; i < jsonObject.getJSONArray("moves").length(); i++) {
                 try {
-                    this.moves.add(jsonObject.getJSONArray("moves").getJSONObject(i).getString("name"));
+                    this.moves.add(jsonObject.getJSONArray("moves").getJSONObject(i).getJSONObject("move").getString("name"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                     this.moves.add("");
@@ -73,12 +74,12 @@ public class Pokemon implements Parcelable {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            this.moves = new ArrayList<>();
         }
         try {
+            this.types = new ArrayList<>();
             for (int i = 0; i < jsonObject.getJSONArray("types").length(); i++) {
                 try {
-                    this.types.add(jsonObject.getJSONArray("types").getJSONObject(i).getString("name"));
+                    this.types.add(jsonObject.getJSONArray("types").getJSONObject(i).getJSONObject("type").getString("name"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                     this.types.add("");
@@ -86,7 +87,6 @@ public class Pokemon implements Parcelable {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            this.types = new ArrayList<>();
         }
     }
 
