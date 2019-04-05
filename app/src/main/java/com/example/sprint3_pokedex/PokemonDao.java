@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class PokemonDao {
 
 
-    private static String BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
+    private static String BASE_URL = "https://pokeapi.co/api/v2/pokemon";
     private static String URL_ENDING = "/.json";
-    private static String READ_POKEMON_BY_NUM = BASE_URL + "/%d" + URL_ENDING;
+    private static String READ_POKEMON_BY_NUM = BASE_URL + "/%s";
 
     public static Pokemon getPokemon(int num) {
 
@@ -27,7 +27,7 @@ public class PokemonDao {
         String[] moves = null;
         Pokemon pokemon = null;
 
-        final String result = NetworkAdapter.httpRequest(String.format(READ_POKEMON_BY_NUM, num));
+        final String result = NetworkAdapter.httpRequest(String.format(READ_POKEMON_BY_NUM, String.valueOf(num)));
         try {
             JSONObject jsonObject = new JSONObject(result);
 

@@ -28,12 +28,27 @@ public class PokeFavoritesListActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                final String input = etInput.getText().toString();
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        PokemonDao.addPokemonToFavorites(PokemonDao.getPokemon(Integer.parseInt(etInput.getText().toString())));
-                        updateList();
+
+                        PokemonDao.addPokemonToFavorites(PokemonDao.getPokemon(Integer.parseInt(input)));
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                             //   updateList();
+                            }
+                        });
+
                     }
+
+
+
                 }).start();
             }
         });
