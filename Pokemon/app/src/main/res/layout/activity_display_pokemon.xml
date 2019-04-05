@@ -57,18 +57,22 @@
         android:id="@+id/text_pokemon_abilities"
         android:layout_width="178dp"
         android:layout_height="281dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="19dp"
+        app:layout_constraintEnd_toStartOf="@+id/text_pokemon_moves"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_pokemon_type" />
 
     <TextView
         android:id="@+id/text_pokemon_moves"
         android:layout_width="182dp"
-        android:layout_height="238dp"
+        android:layout_height="281dp"
+        android:layout_marginStart="19dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_pokemon_abilities"
         app:layout_constraintTop_toBottomOf="@+id/text_pokemon_type" />
 
 </android.support.constraint.ConstraintLayout>

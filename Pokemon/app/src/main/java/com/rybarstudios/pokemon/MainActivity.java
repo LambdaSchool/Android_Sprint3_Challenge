@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     ImageButton searchButton;
@@ -30,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
 
         recentSearches = findViewById(R.id.recent_pokemon_search);
         mEditText = findViewById(R.id.edit_pokemon_search);
+
+        Map<String, ?> keys = mSharedPreferences.getAll();
+        for(Map.Entry<String, ?> entry : keys.entrySet()) {
+            recentSearches.addView(generateTextView(entry.getValue().toString()));
+        }
+
+
         searchButton = findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                recentSearches.addView(generateTextView(PokemonDao.getRecentSearch()));
+                                recentSearches.addView(generateTextView(
+                                        PokemonDao.getRecentSearch(pokemon.getId())));
                             }
                         });
                     }
@@ -58,8 +68,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private TextView generateTextView(String pokemon) {
-        TextView view = new TextView(context);
+        final TextView view = new TextView(context);
         view.setText(pokemon);
+
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                view.setVisibility(View.GONE);
+                return false;
+            }
+        });
         return view;
     }
 }

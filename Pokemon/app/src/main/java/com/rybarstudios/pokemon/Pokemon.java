@@ -84,21 +84,6 @@ public class Pokemon implements Parcelable {
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(spriteUrl);
-        dest.writeStringArray(abilities);
-        dest.writeStringArray(types);
-        dest.writeInt(id);
-        dest.writeParcelable(image, flags);
-    }
-
     public String getName() {
         return name;
     }
@@ -145,5 +130,20 @@ public class Pokemon implements Parcelable {
 
     public void setImage(Bitmap image) {
         this.image = image;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(spriteUrl);
+        dest.writeStringArray(abilities);
+        dest.writeStringArray(types);
+        dest.writeInt(id);
+        dest.writeParcelable(image, flags);
     }
 }

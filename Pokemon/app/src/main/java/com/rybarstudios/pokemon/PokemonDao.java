@@ -31,12 +31,15 @@ public class PokemonDao {
 
     public static void saveSearch(Pokemon pokemon) {
         SharedPreferences.Editor editor = MainActivity.mSharedPreferences.edit();
-        editor.putString(Constants.SAVED_NAMES, pokemon.getName());
+        editor.putString(Constants.SAVED_NAMES + pokemon.getId(), pokemon.getName());
         editor.apply();
     }
 
-    public static String getRecentSearch() {
-        SharedPreferences preferences = MainActivity.mSharedPreferences;
-        return preferences.getString(Constants.SAVED_NAMES, "");
+    public static String getRecentSearch(int id) {
+        if(MainActivity.mSharedPreferences != null) {
+            SharedPreferences preferences = MainActivity.mSharedPreferences;
+            return preferences.getString(Constants.SAVED_NAMES + id, "");
+        }
+        return "";
     }
 }
