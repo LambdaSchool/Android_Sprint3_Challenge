@@ -33,44 +33,57 @@ public class ViewerActivity extends AppCompatActivity {
         context = this;
         spriteImageView = findViewById(R.id.image_view_sprite);
         Intent intent = getIntent();
-        selectedPokemon = (Pokemon) intent.getSerializableExtra(Pokemon.POKEMON_INTENT_KEY);
-        pokemonNameTextView.setText(selectedPokemon.getName());
-        pokemonIdTextView.setText("No. " + selectedPokemon.getId());
-        ArrayList<String> pokemonTypes = selectedPokemon.getTypes();
-        pokemonType1TextView.setText(pokemonTypes.get(0));
-        try{
-            pokemonType2TextView.setText(pokemonTypes.get(1));
-        }catch (IndexOutOfBoundsException e){
-            e.printStackTrace();
-        }
-
-        ArrayList<String> selectedPokemonAbilities = selectedPokemon.getAbilities();
-        layoutAbilities.removeAllViews();
-        for(String abilitiy: selectedPokemonAbilities){
-            layoutAbilities.addView(createTextView(abilitiy));
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Bitmap pokemonBitmap = NetworkAdapter.bitmapFromUrl(selectedPokemon.getSpriteUrl());
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        spriteImageView.setImageBitmap(pokemonBitmap);
-                    }
-                });
+        try {
+            selectedPokemon = (Pokemon) intent.getSerializableExtra(Pokemon.POKEMON_INTENT_KEY);
+            pokemonNameTextView.setText(selectedPokemon.getName());
+            pokemonIdTextView.setText("No. " + selectedPokemon.getId());
+            ArrayList<String> pokemonTypes = selectedPokemon.getTypes();
+            pokemonType1TextView.setText(pokemonTypes.get(0));
+            try {
+                pokemonType2TextView.setText(pokemonTypes.get(1));
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
             }
-        }).start();
+
+            ArrayList<String> selectedPokemonAbilities = selectedPokemon.getAbilities();
+            layoutAbilities.removeAllViews();
+            for (String ability : selectedPokemonAbilities) {
+                layoutAbilities.addView(createTextView(ability));
+            }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final Bitmap pokemonBitmap = NetworkAdapter.bitmapFromUrl(selectedPokemon.getSpriteUrl());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            spriteImageView.setImageBitmap(pokemonBitmap);
+                        }
+                    });
+                }
+            }).start();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            finish();
+        }
 
 
     }
 
 
-    public TextView createTextView(String ability){
+    public TextView createTextView(String ability) {
         TextView view = new TextView(context);
         view.setText(ability);
         view.setTextSize(18);
         view.setPadding(10, 10, 10, 10);
         return view;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(Pokemon.POKEMON_INTENT_KEY, selectedPokemon);
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 }
