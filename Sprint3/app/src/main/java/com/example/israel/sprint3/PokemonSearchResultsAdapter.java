@@ -13,6 +13,11 @@ public class PokemonSearchResultsAdapter extends RecyclerView.Adapter<PokemonSea
 
     private ArrayList<String> pokemonNames;
 
+    public void setPokemonNames(ArrayList<String> pokemonNames) {
+        this.pokemonNames = pokemonNames;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
