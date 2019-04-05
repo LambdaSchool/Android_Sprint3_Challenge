@@ -71,7 +71,7 @@ public class PokemonDao {
     }
 
 
-    public Bitmap bitmapFromURL (String imageURl){
+    public static Bitmap bitmapFromURL (String imageURl){
         Bitmap image = null;
 
         try {
