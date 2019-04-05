@@ -2,6 +2,7 @@ package com.jakeesveld.android_sprint3_challenge;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,27 +17,66 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 15;
+    public static final String PREFS_ID_LIST_KEY = "idList";
     EditText editSearch;
     Button buttonSubmit;
     Context context;
     static ArrayList<Pokemon> pokemonList;
     PokemonListAdapter listAdapter;
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        prefs = getSharedPreferences("Pokemon", MODE_PRIVATE);
         editSearch = findViewById(R.id.edit_search);
         buttonSubmit = findViewById(R.id.button_search);
+        final PokemonDAO dao = new PokemonDAO();
         context = this;
-        pokemonList = new ArrayList<>();
+        if (prefs.getString(PREFS_ID_LIST_KEY, null) != null) {
+            pokemonList = new ArrayList<>();
+            Thread prefsGet = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    String idListString = prefs.getString(PREFS_ID_LIST_KEY, null);
+                    String[] idList = idListString.split(",");
+                    for (int i = 0; i < idList.length; i++) {
+                        String pokemonId = idList[i];
+                        Pokemon listPokemon = dao.getPokemonById(pokemonId);
+                        final Pokemon listPokemonWithSprite = new Pokemon(
+                                listPokemon.getName(),
+                                listPokemon.getSpriteUrl(),
+                                listPokemon.getId(),
+                                listPokemon.getAbilities(),
+                                listPokemon.getTypes(),
+                                NetworkAdapter.bitmapFromUrl(listPokemon.getSpriteUrl()));
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                pokemonList.add(listPokemonWithSprite);
+                            }
+                        });
+                    }
+                }
+            });
+            prefsGet.start();
+            try {
+                prefsGet.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }else {
+            pokemonList = new ArrayList<>();
+        }
         listAdapter = new PokemonListAdapter(pokemonList);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(listAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
 
-        final PokemonDAO dao = new PokemonDAO();
+
 
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     @Override
@@ -68,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(final int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             if (data != null) {
                 final Pokemon returnedPokemon = (Pokemon) data.getSerializableExtra(Pokemon.POKEMON_INTENT_KEY);
                 new Thread(new Runnable() {
@@ -94,5 +133,20 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < pokemonList.size(); i++) {
+            Pokemon selected = pokemonList.get(i);
+            builder.append(selected.getId());
+            builder.append(",");
+        }
+        String idList = builder.toString();
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putString(PREFS_ID_LIST_KEY, idList);
+        edit.apply();
     }
 }
