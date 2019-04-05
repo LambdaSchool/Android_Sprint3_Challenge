@@ -37,7 +37,12 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(pokemonViewHolder.parentLayout.getContext(), ViewerActivity.class);
-                intent.putExtra("pokemon", data);
+                Pokemon passablePokemon = new Pokemon(data.getName(),
+                        data.getSpriteUrl(),
+                        data.getId(),
+                        data.getAbilities(),
+                        data.getTypes());
+                intent.putExtra(Pokemon.POKEMON_INTENT_KEY, passablePokemon);
                 pokemonViewHolder.parentLayout.getContext().startActivity(intent);
             }
         });

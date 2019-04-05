@@ -25,7 +25,8 @@ public class PokemonDAO {
             for(int i=0; i < typesArray.length(); i++){
                 try{
                     JSONObject type = typesArray.getJSONObject(i);
-                    types.add(type.getString("type"));
+                    JSONObject typejson = type.getJSONObject("type");
+                    types.add(typejson.getString("name"));
                 }catch (JSONException e){
                     e.printStackTrace();
                 }

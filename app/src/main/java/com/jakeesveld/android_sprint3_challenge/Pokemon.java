@@ -71,17 +71,7 @@ public class Pokemon implements Serializable {
     }
 
     public ArrayList<String> getTypes() {
-        ArrayList<String> typesPlainText = new ArrayList<>();
-        for(String json: types){
-            try{
-                JSONObject jsonObject = new JSONObject(json);
-                String typeName = jsonObject.getString("name");
-                typesPlainText.add(typeName);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return typesPlainText;
+        return types;
     }
 
     public Bitmap getSpriteBitmap() {
