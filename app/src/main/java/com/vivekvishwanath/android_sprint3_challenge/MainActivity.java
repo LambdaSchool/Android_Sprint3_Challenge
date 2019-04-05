@@ -47,13 +47,15 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String nameOrId = pokemonEditText.getText().toString();
+                        String nameOrId = pokemonEditText.getText().toString().toLowerCase();
                         Pokemon pokemon = new Pokemon(PokemonDao.getPokemon(nameOrId));
-                        searchedPokemon.add(pokemon);
-                        pokemonListAdapter.notifyItemInserted(searchedPokemon.size() - 1);
-                        Intent intent = new Intent(context, ViewPokemon.class);
-                        intent.putExtra("pokemon", pokemon);
-                        startActivity(intent);
+                        if (pokemon.getId() != 0) {
+                            searchedPokemon.add(pokemon);
+                            pokemonListAdapter.notifyItemInserted(searchedPokemon.size() - 1);
+                            Intent intent = new Intent(context, ViewPokemon.class);
+                            intent.putExtra("pokemon", pokemon);
+                            startActivity(intent);
+                        }
                     }
                 }).start();
             }

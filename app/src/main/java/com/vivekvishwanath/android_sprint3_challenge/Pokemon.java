@@ -27,47 +27,49 @@ public class Pokemon implements Parcelable {
     }
 
     public Pokemon (JSONObject pokemonJSON) {
-        try {
-            this.id = pokemonJSON.getInt("id");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            this.name = pokemonJSON.getString("name");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            this.spriteUrl = pokemonJSON.getJSONObject("sprites").getString("front_default");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        this.abilities = new ArrayList<>();
-        try {
-            JSONArray abilitiesJSONArray = pokemonJSON.getJSONArray("abilities");
-            for (int i = 0; i < abilitiesJSONArray.length(); i++) {
-                this.abilities.add(abilitiesJSONArray.getJSONObject(i).getJSONObject("ability").getString("name"));
+        if (pokemonJSON != null) {
+            try {
+                this.id = pokemonJSON.getInt("id");
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        this.moves = new ArrayList<>();
-        try {
-            JSONArray movesJSONArray = pokemonJSON.getJSONArray("moves");
-            for (int i = 0; i < movesJSONArray.length(); i++) {
-                this.moves.add(movesJSONArray.getJSONObject(i).getJSONObject("move").getString("name"));
+            try {
+                this.name = pokemonJSON.getString("name");
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        this.types = new ArrayList<>();
-        try {
-            JSONArray typesJSONArray = pokemonJSON.getJSONArray("types");
-            for (int i = 0; i < typesJSONArray.length(); i++) {
-                this.types.add(typesJSONArray.getJSONObject(i).getJSONObject("type").getString("name"));
+            try {
+                this.spriteUrl = pokemonJSON.getJSONObject("sprites").getString("front_default");
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+            this.abilities = new ArrayList<>();
+            try {
+                JSONArray abilitiesJSONArray = pokemonJSON.getJSONArray("abilities");
+                for (int i = 0; i < abilitiesJSONArray.length(); i++) {
+                    this.abilities.add(abilitiesJSONArray.getJSONObject(i).getJSONObject("ability").getString("name"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            this.moves = new ArrayList<>();
+            try {
+                JSONArray movesJSONArray = pokemonJSON.getJSONArray("moves");
+                for (int i = 0; i < movesJSONArray.length(); i++) {
+                    this.moves.add(movesJSONArray.getJSONObject(i).getJSONObject("move").getString("name"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            this.types = new ArrayList<>();
+            try {
+                JSONArray typesJSONArray = pokemonJSON.getJSONArray("types");
+                for (int i = 0; i < typesJSONArray.length(); i++) {
+                    this.types.add(typesJSONArray.getJSONObject(i).getJSONObject("type").getString("name"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
