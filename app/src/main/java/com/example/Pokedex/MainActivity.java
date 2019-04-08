@@ -1,4 +1,4 @@
-package com.example.android_sprint3_challenge;
+package com.example.Pokedex;
 
 import android.content.Context;
 import android.content.Intent;

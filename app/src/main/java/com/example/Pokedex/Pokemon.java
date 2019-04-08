@@ -1,7 +1,6 @@
-package com.example.android_sprint3_challenge;
+package com.example.Pokedex;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;

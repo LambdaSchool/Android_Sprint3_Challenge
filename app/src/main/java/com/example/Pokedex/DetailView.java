@@ -1,19 +1,15 @@
-package com.example.android_sprint3_challenge;
+package com.example.Pokedex;
 
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 
 public class DetailView extends AppCompatActivity {
@@ -39,8 +35,6 @@ public class DetailView extends AppCompatActivity {
         //Retrieving Intent
         Intent intent = getIntent();
         final String pokeNumber = intent.getStringExtra(MainActivity.POKEMON_NUMBER_EXTRA);
-
-
 
         //Creating Pokemon TODO: Create asynctask
         new Thread(new Runnable() {
@@ -77,9 +71,6 @@ public class DetailView extends AppCompatActivity {
                 });
             }
         }).start();
-
-
-
 
 
     }
@@ -140,5 +131,4 @@ public class DetailView extends AppCompatActivity {
             publishProgress(value);
         }
     }*/
-
 }
