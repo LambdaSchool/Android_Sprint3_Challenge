@@ -19,7 +19,6 @@ public class DetailView extends AppCompatActivity {
     TextView textViewPokeName;
     ImageView imageViewPokeImage;
     Context context;
-
     ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +34,9 @@ public class DetailView extends AppCompatActivity {
         //Retrieving Intent
         Intent intent = getIntent();
         final String pokeNumber = intent.getStringExtra(MainActivity.POKEMON_NUMBER_EXTRA);
+        Bundle arguments = new Bundle();
+
+        arguments.putSerializable("Bundle", intent.getSerializableExtra("Bundle"));
 
         //Creating Pokemon TODO: Create asynctask
         new Thread(new Runnable() {

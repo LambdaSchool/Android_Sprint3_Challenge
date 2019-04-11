@@ -1,7 +1,11 @@
 package com.example.Pokedex;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -45,13 +49,16 @@ public class MainActivity extends AppCompatActivity {
                             String pokeViewText = (i+1) + " " + pokeNames.get(i); //creates String for each item in pokenames
                             final TextView tv = new TextView(context);
                             tv.setText(pokeViewText);
+                            tv.setTransitionName("pokename");
                             final String index = String.valueOf(i+1);
                             tv.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) { //clicking the newly added view
                                     Intent intent = new Intent(context, DetailView.class);
                                     intent.putExtra(POKEMON_NUMBER_EXTRA, index);
-                                    startActivity(intent);
+                                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                                            makeSceneTransitionAnimation((Activity) view.getContext(), tv, "pokename");
+                                    startActivity(intent, options.toBundle());
                                 }
                             });
                             tv.setOnLongClickListener(new View.OnLongClickListener() { //add pokemon from pokedex to saved list by long click
@@ -64,7 +71,19 @@ public class MainActivity extends AppCompatActivity {
                                         public void onClick(View view) { //clicking the newly added view
                                             Intent intent = new Intent(context, DetailView.class);
                                             intent.putExtra(POKEMON_NUMBER_EXTRA, index);
-                                            startActivity(intent);
+
+
+
+                                            /*Bundle options2 = ActivityOptions.makeSceneTransitionAnimation( //animate the name
+                                                    (Activity) view.getContext(),
+                                                    tv,
+                                                    ViewCompat.getTransitionName(tv)
+                                            ).toBundle();*/
+
+                                            ActivityOptionsCompat options = ActivityOptionsCompat.
+                                                    makeSceneTransitionAnimation((Activity) view.getContext(), savedtv, "pokename");
+
+                                            startActivity(intent, options.toBundle());
                                         }
                                     });
                                     savedtv.setOnLongClickListener(new View.OnLongClickListener() {
