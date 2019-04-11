@@ -9,19 +9,19 @@ import java.util.ArrayList;
 
 public class PokemonNetworkDao {
 
-    private static final String BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
-    private static final String ALL_POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/?limit=807";
+    private static final java.lang.String BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
+    private static final java.lang.String ALL_POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/?limit=807";
 
     //example url https://pokeapi.co/api/v2/pokemon/5
 
-    public static Pokemon getSinglePokemon(String pokeNumber) {
-        String result = NetworkAdapter.httpRequest(BASE_URL + pokeNumber);
+    public static Pokemon getSinglePokemon(java.lang.String pokeNumber) {
+        java.lang.String result = NetworkAdapter.httpRequest(BASE_URL + pokeNumber);
         try {
             JSONObject jsonTOP = new JSONObject(result);
-            String pokeName = jsonTOP.getString("name");
+            java.lang.String pokeName = jsonTOP.getString("name");
             JSONArray pokeMoves = jsonTOP.getJSONArray("moves");
             JSONArray pokeTypes = jsonTOP.getJSONArray("types");
-            String pokeImageUrl = jsonTOP.getJSONObject("sprites").getString("front_default");
+            java.lang.String pokeImageUrl = jsonTOP.getJSONObject("sprites").getString("front_default");
             Pokemon pokemon = new Pokemon(pokeName, pokeMoves, pokeTypes, pokeImageUrl);
             return pokemon;
         } catch (JSONException e) {
@@ -30,10 +30,10 @@ public class PokemonNetworkDao {
         }
     }
 
-    public static ArrayList<String> getAllPokemonUrls() {
-        ArrayList<String> pokeNames = new ArrayList<>();
+    public static ArrayList<java.lang.String> getAllPokemonUrls() {
+        ArrayList<java.lang.String> pokeNames = new ArrayList<>();
 
-        String result = NetworkAdapter.httpRequest(ALL_POKEMON_URL);
+        java.lang.String result = NetworkAdapter.httpRequest(ALL_POKEMON_URL);
         try {
             JSONObject jsonObject = new JSONObject(result);
             JSONArray jsonArray = jsonObject.getJSONArray("results");
@@ -51,9 +51,9 @@ public class PokemonNetworkDao {
 
     }
 
-    public static ArrayList<String> getAllPokemonNames() {
-        ArrayList<String> pokeNames = new ArrayList<>();
-        String result = NetworkAdapter.httpRequest(ALL_POKEMON_URL);
+    public static ArrayList<java.lang.String> getAllPokemonNames() {
+        ArrayList<java.lang.String> pokeNames = new ArrayList<>();
+        java.lang.String result = NetworkAdapter.httpRequest(ALL_POKEMON_URL);
         try {
             JSONObject jsonObject = new JSONObject(result);
             JSONArray jsonArray = jsonObject.getJSONArray("results");

@@ -40,7 +40,15 @@
             android:layout_height="wrap_content" />
     </ScrollView>
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_view"
+        app:layout_constraintTop_toBottomOf="@id/scroll_view_saved_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!--<ScrollView
         android:id="@+id/scroll_view_pokedex"
         android:paddingTop="25dp"
         android:fitsSystemWindows="true"
@@ -55,6 +63,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </ScrollView>
+    </ScrollView>-->
 
 </android.support.constraint.ConstraintLayout>

@@ -8,6 +8,8 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,12 +29,16 @@ public class MainActivity extends AppCompatActivity {
     //ArrayList<String> savedPokemon = new ArrayList<>(); //For use with permanence
     ArrayList<String> pokeNames = new ArrayList<>();
 
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         linearLayoutPokeNames = findViewById(R.id.linear_layout_scroll_child_name_list);
-        linearLayoutPokeDex = findViewById(R.id.linear_layout_scroll_child_pokedex_list);
+        //linearLayoutPokeDex = findViewById(R.id.linear_layout_scroll_child_pokedex_list);
         catchButton = findViewById(R.id.button_catch);
         editTextSearch = findViewById(R.id.edit_text_search);
         context = this;
@@ -45,7 +51,23 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        for (int i = 0; i < pokeNames.size(); ++i) { //populate pokedex scrollview
+
+                        recyclerView = findViewById(R.id.recycler_view_view);
+
+                        // use this setting to improve performance if you know that changes
+                        // in content do not change the layout size of the RecyclerView
+                        recyclerView.setHasFixedSize(true);
+
+                        // use a linear layout manager
+                        layoutManager = new LinearLayoutManager(context);
+                        recyclerView.setLayoutManager(layoutManager);
+
+                        // specify an adapter (see also next example)
+                        mAdapter = new ListAdapter(pokeNames);
+                        recyclerView.setAdapter(mAdapter);
+
+
+                        /*for (int i = 0; i < pokeNames.size(); ++i) { //populate pokedex scrollview
                             String pokeViewText = (i+1) + " " + pokeNames.get(i); //creates String for each item in pokenames
                             final TextView tv = new TextView(context);
                             tv.setText(pokeViewText);
@@ -74,14 +96,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                                            /*Bundle options2 = ActivityOptions.makeSceneTransitionAnimation( //animate the name
+                                            *//*Bundle options2 = ActivityOptions.makeSceneTransitionAnimation( //animate the name
                                                     (Activity) view.getContext(),
                                                     tv,
                                                     ViewCompat.getTransitionName(tv)
-                                            ).toBundle();*/
+                                            ).toBundle();*//*
 
                                             ActivityOptionsCompat options = ActivityOptionsCompat.
-                                                    makeSceneTransitionAnimation((Activity) view.getContext(), savedtv, "pokename");
+                                                    makeSceneTransitionAnimation((Activity) view.getContext(), tv, "pokename");
 
                                             startActivity(intent, options.toBundle());
                                         }
@@ -99,7 +121,9 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
                             linearLayoutPokeDex.addView(tv);
-                        }
+                        }*/
+
+
                         catchButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) { //Creating view for saved pokemon and passing intent

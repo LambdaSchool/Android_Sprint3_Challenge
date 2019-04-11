@@ -6,7 +6,7 @@
     android:paddingTop="15dp"
     android:paddingStart="15dp"
     android:paddingEnd="15dp"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/recycler_element_image"
@@ -21,6 +21,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/recycler_element_image"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:textSize="25dp"
         android:layout_height="wrap_content" />
 
 

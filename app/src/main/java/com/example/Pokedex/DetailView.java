@@ -33,7 +33,7 @@ public class DetailView extends AppCompatActivity {
 
         //Retrieving Intent
         Intent intent = getIntent();
-        final String pokeNumber = intent.getStringExtra(MainActivity.POKEMON_NUMBER_EXTRA);
+        final java.lang.String pokeNumber = intent.getStringExtra(MainActivity.POKEMON_NUMBER_EXTRA);
         Bundle arguments = new Bundle();
 
         arguments.putSerializable("Bundle", intent.getSerializableExtra("Bundle"));
@@ -50,13 +50,13 @@ public class DetailView extends AppCompatActivity {
                         imageViewPokeImage.setImageBitmap(pokemon.getImage());
                         textViewPokeName.setText(pokemon.getName());
 
-                        for (String moveName: pokemon.getMoves()) { //generates views for moves
+                        for (java.lang.String moveName: pokemon.getMoves()) { //generates views for moves
                             TextView tv = new TextView(context);
                             tv.setText(moveName);
                             linearLayoutPokeMoves.addView(tv);
                         }
 
-                        for (String typeName: pokemon.getTypes()) { //generates views for types
+                        for (java.lang.String typeName: pokemon.getTypes()) { //generates views for types
                             TextView tv = new TextView(context);
                             tv.setText(typeName);
                             linearLayoutPokeTypes.addView(tv);
@@ -77,7 +77,7 @@ public class DetailView extends AppCompatActivity {
 
     }
 
-    public static int getResId(String resName) { //function for programmatically getting ResId as int
+    public static int getResId(java.lang.String resName) { //function for programmatically getting ResId as int
 
         try {
             Field idField = R.raw.class.getDeclaredField(resName);

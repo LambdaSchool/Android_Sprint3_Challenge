@@ -1,9 +1,10 @@
-/*
 package com.example.Pokedex;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,9 @@ import java.util.ArrayList;
 import static com.example.Pokedex.MainActivity.POKEMON_NUMBER_EXTRA;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> { //NOT IMPLEMENTED
-    private ArrayList<Pokemon> pokeList;
+    private ArrayList<String> pokeList;
 
-    public ListAdapter(ArrayList<Pokemon> pokeList) {
+    public ListAdapter(ArrayList<String> pokeList) {
         this.pokeList = pokeList;
     }
 
@@ -35,22 +36,22 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull final ListAdapter.MyViewHolder myViewHolder, int i) {
 
 
-        String pokeViewText = (i + 1) + " " + pokeList.get(i).getName();
+        java.lang.String pokeViewText = (i + 1) + " " + pokeList.get(i);
         myViewHolder.pokeName.setText(pokeViewText);
-        myViewHolder.pokeImage.setImageBitmap(pokeList.get(i).getImage());
-        final String index = String.valueOf(i + 1);
-
+        myViewHolder.pokeImage.setImageDrawable(myViewHolder.pokeImage.getContext().getDrawable(R.drawable.pokeball));
+        final java.lang.String index = java.lang.String.valueOf(i + 1);
         myViewHolder.parent.setOnClickListener(new View.OnClickListener() {
             private Context context;
             @Override
             public void onClick(View v) {
                 context = myViewHolder.parent.getContext();
                 Intent intent = new Intent(context, DetailView.class);
-                intent.putExtra(POKEMON_NUMBER_EXTRA, index);
-                context.startActivity(intent);
+                intent.putExtra(java.lang.String.valueOf(POKEMON_NUMBER_EXTRA), index);
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation((Activity) v.getContext(), myViewHolder.pokeImage, "pokename");
+                context.startActivity(intent, options.toBundle());
             }
         });
-        */
 /*myViewHolder.parent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -78,7 +79,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                 }
 
             }
-        });*//*
+        });*/
 
 
     }
@@ -101,4 +102,3 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         }
     }
 }
-*/
