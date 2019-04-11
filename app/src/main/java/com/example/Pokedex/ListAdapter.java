@@ -59,6 +59,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                                 }
                                 Intent intent = new Intent(context, DetailView.class);
                                 intent.putExtra(java.lang.String.valueOf(POKEMON_NUMBER_EXTRA), index);
+                                intent.putExtra("Pokemon",pokemon);
                                 ActivityOptionsCompat options = ActivityOptionsCompat.
                                         makeSceneTransitionAnimation((Activity) v.getContext(), myViewHolder.pokeImage, "pokename");
                                 context.startActivity(intent, options.toBundle());

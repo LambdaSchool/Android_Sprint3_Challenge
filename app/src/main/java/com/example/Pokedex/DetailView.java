@@ -20,6 +20,18 @@ public class DetailView extends AppCompatActivity {
     ImageView imageViewPokeImage;
     Context context;
     ProgressBar progressBar;
+
+    public static int getResId(java.lang.String resName) { //function for programmatically getting ResId as int
+
+        try {
+            Field idField = R.raw.class.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,59 +45,31 @@ public class DetailView extends AppCompatActivity {
 
         //Retrieving Intent
         Intent intent = getIntent();
-        final java.lang.String pokeNumber = intent.getStringExtra(MainActivity.POKEMON_NUMBER_EXTRA);
-        Bundle arguments = new Bundle();
+        final String pokeNumber = intent.getStringExtra(MainActivity.POKEMON_NUMBER_EXTRA);
+        final Pokemon pokemon = intent.getParcelableExtra("Pokemon");
 
-        arguments.putSerializable("Bundle", intent.getSerializableExtra("Bundle"));
+        imageViewPokeImage.setImageBitmap(pokemon.getImage());
+        textViewPokeName.setText(pokemon.getName());
 
-        //Creating Pokemon TODO: Create asynctask
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                pokemon = PokemonNetworkDao.getSinglePokemon(pokeNumber);
+        for (java.lang.String moveName : pokemon.getMoves()) { //generates views for moves
+            TextView tv = new TextView(context);
+            tv.setText(moveName);
+            linearLayoutPokeMoves.addView(tv);
+        }
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        imageViewPokeImage.setImageBitmap(pokemon.getImage());
-                        textViewPokeName.setText(pokemon.getName());
-
-                        for (java.lang.String moveName: pokemon.getMoves()) { //generates views for moves
-                            TextView tv = new TextView(context);
-                            tv.setText(moveName);
-                            linearLayoutPokeMoves.addView(tv);
-                        }
-
-                        for (java.lang.String typeName: pokemon.getTypes()) { //generates views for types
-                            TextView tv = new TextView(context);
-                            tv.setText(typeName);
-                            linearLayoutPokeTypes.addView(tv);
-                        }
-                        int resId = getResId("cry" + pokeNumber); //calls function to generate ResId
-                        try {
-                            MediaPlayer mediaPlayer = MediaPlayer.create(context, resId); //plays pokemon cry
-                            mediaPlayer.start();
-                        } catch (Exception e){
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
-            }
-        }).start();
-
-
-    }
-
-    public static int getResId(java.lang.String resName) { //function for programmatically getting ResId as int
-
+        for (java.lang.String typeName : pokemon.getTypes()) { //generates views for types
+            TextView tv = new TextView(context);
+            tv.setText(typeName);
+            linearLayoutPokeTypes.addView(tv);
+        }
+        int resId = getResId("cry" + pokeNumber); //calls function to generate ResId
         try {
-            Field idField = R.raw.class.getDeclaredField(resName);
-            return idField.getInt(idField);
+            MediaPlayer mediaPlayer = MediaPlayer.create(context, resId); //plays pokemon cry
+            mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
-            return -1;
         }
+
     }
 
 
