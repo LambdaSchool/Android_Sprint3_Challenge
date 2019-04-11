@@ -33,25 +33,42 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ListAdapter.MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ListAdapter.MyViewHolder myViewHolder, final int i) {
 
-
-        java.lang.String pokeViewText = (i + 1) + " " + pokeList.get(i);
+        final java.lang.String pokeViewText = (i + 1) + " " + pokeList.get(i);
         myViewHolder.pokeName.setText(pokeViewText);
         myViewHolder.pokeImage.setImageDrawable(myViewHolder.pokeImage.getContext().getDrawable(R.drawable.pokeball));
         final java.lang.String index = java.lang.String.valueOf(i + 1);
-        myViewHolder.parent.setOnClickListener(new View.OnClickListener() {
-            private Context context;
+        new Thread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                context = myViewHolder.parent.getContext();
-                Intent intent = new Intent(context, DetailView.class);
-                intent.putExtra(java.lang.String.valueOf(POKEMON_NUMBER_EXTRA), index);
-                ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation((Activity) v.getContext(), myViewHolder.pokeImage, "pokename");
-                context.startActivity(intent, options.toBundle());
+            public void run() {
+                final Pokemon pokemon = PokemonNetworkDao.getSinglePokemon(String.valueOf(i+1));
+                Activity activity = (Activity)myViewHolder.pokeImage.getContext();
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        assert pokemon != null;
+                            //myViewHolder.pokeImage.setImageBitmap(pokemon.getImage()); //enable this line to make them appear out of pokeballs as soon as they load
+                        myViewHolder.parent.setOnClickListener(new View.OnClickListener() {
+                            private Context context;
+                            @Override
+                            public void onClick(View v) {
+                                context = myViewHolder.parent.getContext();
+                                if (pokemon.getImage() != null && pokemon.getName().equals(pokeList.get(i))) { //TODO: Fix big when scrolling fast through recycler view and selecting a pokemon quickly
+                                    myViewHolder.pokeImage.setImageBitmap(pokemon.getImage());
+                                }
+                                Intent intent = new Intent(context, DetailView.class);
+                                intent.putExtra(java.lang.String.valueOf(POKEMON_NUMBER_EXTRA), index);
+                                ActivityOptionsCompat options = ActivityOptionsCompat.
+                                        makeSceneTransitionAnimation((Activity) v.getContext(), myViewHolder.pokeImage, "pokename");
+                                context.startActivity(intent, options.toBundle());
+                            }
+                        });
+                    }
+                });
             }
-        });
+        }).start();
+
 /*myViewHolder.parent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
