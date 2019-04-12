@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,18 +63,22 @@ public class MainActivity extends AppCompatActivity {
                                 name=strNames[i].split("\""  )[3];
                             }
                             id=((strNames[i+1].split("\""  )[3]).replace( "https://pokeapi.co/api/v2/pokemon/","" )).replace( "/","" );
+
                             Pokemon pk=new Pokemon(name,id);
+
                             if(pocketMonsters==null){
                                 pocketMonsters=new PocketMonsters(pk);
                             }else{
                                 pocketMonsters.add(pk);
                             }
 
-                           strDebug+=name+","+id+"\n";
                         }
 
 
-               //    TextView tv = findViewById( R.id.text_debug );
+
+
+
+                            //    TextView tv = findViewById( R.id.text_debug );
                  //   strDebug="test";
                 //    tv.setText(""  );
                //     tv.append(  strDebug );

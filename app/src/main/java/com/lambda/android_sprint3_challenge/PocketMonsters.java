@@ -23,7 +23,7 @@ public class PocketMonsters implements Serializable {
 
         try{
                 iID=Integer.parseInt( strID );
-                if(iID<1)return null;
+                if(iID<1||iID>size())return null;
         }catch (NumberFormatException nFE) {
                 return null;
         }
@@ -55,6 +55,9 @@ public class PocketMonsters implements Serializable {
         }
 
 
+    }
+    public int size(){
+        return alPokemon.size();
     }
 
 }
