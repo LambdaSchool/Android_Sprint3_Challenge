@@ -48,7 +48,7 @@ public class PocketMonsters implements Serializable {
         String[] strTemp=strIDandName.split( "," );
         Pokemon found;
         found=findByID(strTemp[0]);
-        if(strTemp[1].equals( found.getName() )){
+        if(found.getName().equals(  strTemp[1].replace( "\n","" ))){
                 return found;
         }else{
             return null;

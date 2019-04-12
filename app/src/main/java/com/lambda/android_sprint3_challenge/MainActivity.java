@@ -103,9 +103,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendData(TextView tv){
-        context
-
         Pokemon found=pocketMonsters.findByIDandNameString( tv.getText().toString() );
+        if(found==null)return;
         Intent intent = new Intent(context, FullscreenActivity.class);
         intent.putExtra("DATA", found);
         startActivity(intent);

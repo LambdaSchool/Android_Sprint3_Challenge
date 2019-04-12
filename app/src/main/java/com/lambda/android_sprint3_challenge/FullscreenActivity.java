@@ -1,18 +1,29 @@
 package com.lambda.android_sprint3_challenge;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
+    Pokemon pokemonCurrent;
+    Context context;
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -88,10 +99,42 @@ public class FullscreenActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
 
         setContentView( R.layout.activity_fullscreen );
+        context=getApplicationContext();
 
         mVisible = true;
         mControlsView = findViewById( R.id.fullscreen_content_controls );
         mContentView = findViewById( R.id.fullscreen_content );
+
+        pokemonCurrent=receiveData();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                final String result = NetworkAdapter.httpRequest( "https://pokeapi.co/api/v2/pokemon/"+pokemonCurrent.getID()+"/");
+                String strDebug;
+                try{
+                    JSONObject json =  new JSONObject( result );
+
+
+                    JSONObject JsonChild =((JSONObject)json).getJSONObject( "ability" );
+                        pokemonCurrent.setAbilities(JsonChild.getString( "name" ));
+
+                    }else if (json instanceof JSONArray){
+
+                    }
+
+
+
+                }catch (JSONException e){
+                    e.printStackTrace();
+
+                }
+
+
+
+            }
+        }).start();
+
 
 
         // Set up the user interaction to manually show or hide the system UI.
@@ -105,7 +148,14 @@ public class FullscreenActivity extends AppCompatActivity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById( R.id.dummy_button ).setOnTouchListener( mDelayHideTouchListener );
+        Button bt=findViewById( R.id.dummy_button );
+
+        bt.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendData();
+            }
+        } );
     }
 
     @Override
@@ -160,4 +210,19 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks( mHideRunnable );
         mHideHandler.postDelayed( mHideRunnable, delayMillis );
     }
+
+    private Pokemon receiveData(){
+        Pokemon pokemon=(Pokemon) getIntent().getSerializableExtra("DATA");
+    //    pokemonCurrent=pokemon;
+        return pokemon;
+
+    }
+    private void sendData(){
+
+        Pokemon found=pokemonCurrent;
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("DATA", found);
+        startActivity(intent);
+    }
+
 }
