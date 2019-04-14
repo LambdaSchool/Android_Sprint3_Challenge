@@ -17,8 +17,10 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -32,7 +34,7 @@ import java.net.URL;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
-    Pokemon pokemonCurrent;
+    private Pokemon pokemonCurrent;
     private Bitmap bitmap=null;
     Context context;
  //   LinearLayout ll;
@@ -110,6 +112,7 @@ public class FullscreenActivity extends AppCompatActivity {
         showDetail();
 
 
+
     }
 
     void showDetail(){
@@ -163,13 +166,17 @@ public class FullscreenActivity extends AppCompatActivity {
 
     private Pokemon receiveData(){
         Pokemon pokemon=(Pokemon) getIntent().getParcelableExtra( "DATA");
+        Switch sw=findViewById( R.id.switch_saved );
+        sw.setChecked( pokemon.isSaved() );
     //    pokemonCurrent=pokemon;
         return pokemon;
 
     }
     private void sendData(){
 
+        Switch sw=findViewById( R.id.switch_saved );
 
+        pokemonCurrent.setSaved(sw.isChecked());
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra("DATA", pokemonCurrent);
         startActivity(intent);

@@ -9,7 +9,38 @@ import java.io.Serializable;
 public class Pokemon implements Parcelable {
     private String name, spriteUrl, ID, abilities, types;
     private Bitmap bitmap;
-    int index;
+    private int index;
+    private boolean saved;
+
+    protected Pokemon(Parcel in) {
+        name = in.readString();
+        spriteUrl = in.readString();
+        ID = in.readString();
+        abilities = in.readString();
+        types = in.readString();
+        bitmap = in.readParcelable( Bitmap.class.getClassLoader() );
+        saved = in.readByte() != 0;
+    }
+
+    public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {
+        @Override
+        public Pokemon createFromParcel(Parcel in) {
+            return new Pokemon( in );
+        }
+
+        @Override
+        public Pokemon[] newArray(int size) {
+            return new Pokemon[size];
+        }
+    };
+
+    public boolean isSaved() {
+        return saved;
+    }
+
+    public void setSaved(boolean saved) {
+        this.saved = saved;
+    }
 
     public int getIndex() {
         return index;
@@ -37,26 +68,6 @@ public class Pokemon implements Parcelable {
 
     }
 
-    protected Pokemon(Parcel in) {
-        name = in.readString();
-        spriteUrl = in.readString();
-        ID = in.readString();
-        abilities = in.readString();
-        types = in.readString();
-        bitmap = in.readParcelable( Bitmap.class.getClassLoader() );
-    }
-
-    public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {
-        @Override
-        public Pokemon createFromParcel(Parcel in) {
-            return new Pokemon( in );
-        }
-
-        @Override
-        public Pokemon[] newArray(int size) {
-            return new Pokemon[size];
-        }
-    };
 
     public String getName() {
         return name;
@@ -110,6 +121,7 @@ public class Pokemon implements Parcelable {
         this.bitmap = bitmap;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -123,5 +135,7 @@ public class Pokemon implements Parcelable {
         dest.writeString( abilities );
         dest.writeString( types );
         dest.writeParcelable( bitmap, flags );
+        dest.writeByte( (byte) (saved ? 1 : 0) );
     }
 }
+
