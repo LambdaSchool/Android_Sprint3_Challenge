@@ -74,12 +74,12 @@ public class FullscreenActivity extends AppCompatActivity {
                         String strAbilityURL = json.getJSONArray( "abilities" ).getJSONObject( 0 ).getJSONObject( "ability" ).getString( "url" );
                         String strAbilityDetailResult = NetworkAdapter.httpRequest( strAbilityURL );
                         JSONObject json2 = new JSONObject( strAbilityDetailResult );
-                        strAbilities += "\n" + json2.getJSONArray( "flavor_text_entries" ).getJSONObject( 1 ).getString( "flavor_text" );
+                        //strAbilities += "\n" + json2.getJSONArray( "flavor_text_entries" ).getJSONObject( 1 ).getString( "flavor_text" );
                         strAbilities += "\n" + json.getJSONArray( "abilities" ).getJSONObject( 1 ).getJSONObject( "ability" ).getString( "name" );
                         strAbilityURL = json.getJSONArray( "abilities" ).getJSONObject( 1 ).getJSONObject( "ability" ).getString( "url" );
                         strAbilityDetailResult = NetworkAdapter.httpRequest( strAbilityURL );
                         json2 = new JSONObject( strAbilityDetailResult );
-                        strAbilities += "\n" + json2.getJSONArray( "flavor_text_entries" ).getJSONObject( 1 ).getString( "flavor_text" );
+                 //       strAbilities += "\n" + json2.getJSONArray( "flavor_text_entries" ).getJSONObject( 1 ).getString( "flavor_text" );
 
                         strType = json.getJSONArray( "types" ).getJSONObject( 0 ).getJSONObject( "type" ).getString( "name" );
                         strType += "\n" + json.getJSONArray( "types" ).getJSONObject( 1 ).getJSONObject( "type" ).getString( "name" );
