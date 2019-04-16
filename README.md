@@ -1,3 +1,4 @@
+Added animated transitions
 # Android_Sprint3_Challenge
 # Pokemon API
 
