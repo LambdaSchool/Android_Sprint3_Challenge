@@ -1,8 +1,11 @@
 package com.lambda.android_sprint3_challenge;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import org.json.JSONObject;
 
@@ -139,5 +142,23 @@ public class NetworkAdapter {
             }
         }
         return result;
+    }
+
+    //2019/04/17 Check if internet is connected
+    public static boolean isInternetConnected(Context ctx) {
+        if(ctx==null)return false; //No context
+        ConnectivityManager cm;
+        NetworkInfo info = null;
+        try {
+            cm = (ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+            info = cm.getActiveNetworkInfo();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (info != null) {
+            return true;
+        }  else {
+            return false;
+        }
     }
 }
