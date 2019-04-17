@@ -89,48 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         } );
+        if(pocketMonsters==null)pocketMonsters=new PocketMonsters( context );
 
 
-        if(NetworkAdapter.isInternetConnected( context )){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                  //  pocketMonsters.obtainEveryoneFromAPI();
-
-
-                        String strDebug="";
-                        final String result = NetworkAdapter.httpRequest( READ_ALL_URL );
-                        String[] strNames=result.split( "," );
-                        String name="", id="";
-                        for(int i=3;i<strNames.length-1;i+=2){
-                            if(i==3){
-                                name=strNames[i].split("\""  )[5];
-                            }else{
-                                name=strNames[i].split("\""  )[3];
-                            }
-                            id=((strNames[i+1].split("\""  )[3]).replace( "https://pokeapi.co/api/v2/pokemon/","" )).replace( "/","" );
-
-                            Pokemon pk=new Pokemon(name,id);
-
-                            if(pocketMonsters==null){
-                                pocketMonsters=new PocketMonsters(pk);
-                            }else{
-                                pocketMonsters.add(pk);
-                            }
-
-                        }
-
-
-
-
-
-                            //    TextView tv = findViewById( R.id.text_debug );
-                 //   strDebug="test";
-                //    tv.setText(""  );
-               //     tv.append(  strDebug );
-                }
-            }).start();
-        }
     }
 
     private View addFoundPokemon(final Pokemon pokemonFound){

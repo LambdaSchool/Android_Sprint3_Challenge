@@ -144,7 +144,7 @@ public class NetworkAdapter {
         return result;
     }
 
-    //2019/04/17 Check if internet is connected
+    //2019/04/17 Check if internet is connected Shoon
     public static boolean isInternetConnected(Context ctx) {
         if(ctx==null)return false; //No context
         ConnectivityManager cm;

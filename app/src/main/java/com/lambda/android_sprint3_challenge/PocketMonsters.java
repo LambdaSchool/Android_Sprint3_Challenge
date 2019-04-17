@@ -1,6 +1,7 @@
 package com.lambda.android_sprint3_challenge;
 
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.TextView;
@@ -19,8 +20,39 @@ public class PocketMonsters implements Parcelable {
         alPokemon = new ArrayList<>( 1 );
         alPokemon.add( pokemon );
     }
-    public PocketMonsters() {
+    //20190417 Initialize by reading from API
+    public PocketMonsters(Context context) {
         alPokemon = new ArrayList<>( 1 );
+        if(NetworkAdapter.isInternetConnected( context )){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    //  pocketMonsters.obtainEveryoneFromAPI();
+
+
+                    String strDebug="";
+                    final String result = NetworkAdapter.httpRequest( READ_ALL_URL );
+                    String[] strNames=result.split( "," );
+                    String name="", id="";
+                    for(int i=3;i<strNames.length-1;i+=2){
+                        if(i==3){
+                            name=strNames[i].split("\""  )[5];
+                        }else{
+                            name=strNames[i].split("\""  )[3];
+                        }
+                        id=((strNames[i+1].split("\""  )[3]).replace( "https://pokeapi.co/api/v2/pokemon/","" )).replace( "/","" );
+
+                        Pokemon pk=new Pokemon(name,id);
+
+                        if(alPokemon==null)                            alPokemon=new ArrayList<Pokemon>(1);
+
+                        alPokemon.add(pk);
+                    }
+                }
+            }).start();
+        }
+
+
 
     }
 
