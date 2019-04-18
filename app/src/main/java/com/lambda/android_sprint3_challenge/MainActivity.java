@@ -3,8 +3,6 @@ package com.lambda.android_sprint3_challenge;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,9 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private static PocketMonsters pocketMonsters;
     private static LinearLayout ll;
     private static EditText et;
-    private static String strDebug;
-    private static final String BASE_URL       = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=964";
-    private static final String READ_ALL_URL = BASE_URL ;
     private Context context;
 
     @Override
@@ -32,19 +27,16 @@ public class MainActivity extends AppCompatActivity {
         Pokemon pk=receiveData();
         if(pk!=null)       {
             pocketMonsters=pocketMonsters.update(pk);
+            pocketMonsters.writeDataInPreference(pocketMonsters);
             Toast.makeText(getApplicationContext(),et.getText().toString(), Toast.LENGTH_SHORT).show();
 
-       //     et.setText("\b");
-        //    et.setText(strDebug  );
-     //       et.setHint( strDebug  );
             TextView tv=findViewById( R.id.text_debug );
             tv.setText( et.getText() );
-          //  addFoundPokemon( pk );
         }
         PocketMonsters saved=receiveSavedData();
         if(saved!=null)pocketMonsters.update( saved );
-
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -58,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 et=findViewById( R.id.et_entry );
                 context=getApplicationContext();
                 ll=findViewById( R.id.ll_found );
-                strDebug=et.getText().toString();
                 Pokemon pokemonFound=pocketMonsters.findByID( et.getText().toString() ); //by number
                 if(pokemonFound==null){
                     ArrayList<Pokemon> pm=pocketMonsters.findByPartialName( et.getText().toString() );
@@ -69,19 +60,13 @@ public class MainActivity extends AppCompatActivity {
                             ll.addView( addFoundPokemon( pm.get( i ) ) );
                         }
                     }
-
-
-
                 }else{
                     ll.addView(addFoundPokemon( pokemonFound) );//found by ID
-
                 }
-
             }
         } );
 
         Button bts=findViewById( R.id.button_to_saved );
-
         bts.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
             }
         } );
         if(pocketMonsters==null)pocketMonsters=new PocketMonsters( context );
-
-
     }
 
     private View addFoundPokemon(final Pokemon pokemonFound){
@@ -140,6 +123,12 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     ImageView iv = new ImageView( context );
                     iv.setImageBitmap( pokemonFound.getBitmap() );
+                    iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    iv.setMinimumWidth(400);
+
+                    iv.setMinimumHeight(150);
+   //                 LinearLayout.LayoutParams parms=new LinearLayout.LayoutParams(100,100);
+     //               iv.setLayoutParams(parms);
                     ll.addView( iv );
                 }catch (Exception e){
                     e.getMessage();
@@ -149,43 +138,40 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     sendData( pokemonFound.getID() );
+
                 }
             } );
-
             return ll;
         }
-
-
     }
 
     private void sendData(String strID){
         Pokemon found=pocketMonsters.findByID( strID );
         if(found==null)return;
+        pocketMonsters.writeDataInPreference(pocketMonsters);
         Intent intent = new Intent(context, FullscreenActivity.class);
         intent.putExtra("DATA", found);
         startActivity(intent);
     }
     private Pokemon receiveData(){
         Pokemon pokemon=(Pokemon) getIntent().getParcelableExtra(  "DATA");
-        //    pokemonCurrent=pokemon;
         return pokemon;
-
     }
 
     private void sendDataToSaved(){
         PocketMonsters saved=new PocketMonsters( pocketMonsters.findSaved());
         if(saved.size()==0)return;
+        pocketMonsters.writeDataInPreference(pocketMonsters);
         context=getApplicationContext();
         Intent intent = new Intent(context, SavedPocketMonsters.class);
         intent.putExtra("DATA_SAVED", saved);
         startActivity(intent);
-
     }
+
     private PocketMonsters receiveSavedData(){
         PocketMonsters pokemon=(PocketMonsters) getIntent().getParcelableExtra(  "DATA_SAVED");
-        //    pokemonCurrent=pokemon;
+        pocketMonsters.writeDataInPreference(pocketMonsters);
         return pokemon;
-
     }
 }
 

@@ -10,7 +10,7 @@ public class Pokemon implements Parcelable {
     private String name, spriteUrl, ID, abilities, types;
     private Bitmap bitmap;
     private int index;
-    private boolean saved;
+    private boolean bSaved;
 
     protected Pokemon(Parcel in) {
         name = in.readString();
@@ -19,7 +19,12 @@ public class Pokemon implements Parcelable {
         abilities = in.readString();
         types = in.readString();
         bitmap = in.readParcelable( Bitmap.class.getClassLoader() );
-        saved = in.readByte() != 0;
+        bSaved = in.readByte() != 0;
+    }
+
+    public  Pokemon(String strCSV ){
+
+        readCSV(strCSV);
     }
 
     public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {
@@ -35,11 +40,11 @@ public class Pokemon implements Parcelable {
     };
 
     public boolean isSaved() {
-        return saved;
+        return bSaved;
     }
 
     public void setSaved(boolean saved) {
-        this.saved = saved;
+        this.bSaved = saved;
     }
 
     public int getIndex() {
@@ -135,7 +140,52 @@ public class Pokemon implements Parcelable {
         dest.writeString( abilities );
         dest.writeString( types );
         dest.writeParcelable( bitmap, flags );
-        dest.writeByte( (byte) (saved ? 1 : 0) );
+        dest.writeByte( (byte) (bSaved ? 1 : 0) );
+    }
+
+    //20190418 Make CSV for preferences
+    public String toCSV(){
+        String strCSV=name;
+        strCSV+=",";
+        strCSV+=spriteUrl;
+        strCSV+=",";
+        strCSV+=ID;
+        strCSV+=",";
+        strCSV+=abilities;
+        strCSV+=",";
+        strCSV+=types;
+        strCSV+=",";
+        strCSV+=Boolean.toString(bSaved);
+//        strCSV+=bitmap;
+//        strCSV+=",";
+
+        return strCSV;
+    }
+
+    public void readCSV(String strCSV){
+        String[] strarCSV=strCSV.split(",");
+        int len=strarCSV.length;
+        if(len==6){
+            name=strarCSV[0];
+            spriteUrl=strarCSV[1];
+            ID=strarCSV[2];
+            abilities=strarCSV[3];
+            types=strarCSV[4];
+            bSaved=Boolean.valueOf(strarCSV[5]);
+            //            bitmap=strarCSV[5];
+        }else{
+            name=strarCSV[0];
+
+            spriteUrl=strarCSV[1];
+            ID=strarCSV[2];
+            abilities=strarCSV[3];
+            for(int i=4;i<len-2;i++){
+                abilities+=strarCSV[i];
+            }
+            types=strarCSV[len-2];
+            bSaved=Boolean.valueOf(strarCSV[len-1]);
+        }
+
     }
 }
 
