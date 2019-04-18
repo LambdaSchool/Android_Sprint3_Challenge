@@ -7,7 +7,7 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 public class Pokemon implements Parcelable {
-    private String name, spriteUrl, ID, abilities, types;
+    private String name, spriteUrl, strID, abilities, types;
     private Bitmap bitmap;
     private int index;
     private boolean bSaved;
@@ -15,7 +15,7 @@ public class Pokemon implements Parcelable {
     protected Pokemon(Parcel in) {
         name = in.readString();
         spriteUrl = in.readString();
-        ID = in.readString();
+        strID = in.readString();
         abilities = in.readString();
         types = in.readString();
         bitmap = in.readParcelable( Bitmap.class.getClassLoader() );
@@ -57,7 +57,7 @@ public class Pokemon implements Parcelable {
 
     public Pokemon(String name, String ID) {
         this.name = name;
-        this.ID = ID;
+        this.strID = ID;
         this.spriteUrl = "";
         this.abilities = "";
         this.types = "";
@@ -65,7 +65,7 @@ public class Pokemon implements Parcelable {
 
     public Pokemon(String name, String ID, String abilities, String types, String spriteUrl) {
         this.name = name;
-        this.ID = ID;
+        this.strID = ID;
         this.spriteUrl = spriteUrl;
 
         this.abilities = abilities;
@@ -91,22 +91,26 @@ public class Pokemon implements Parcelable {
     }
 
     public String getID() {
-        return ID;
+        return strID;
     }
     public int getIntID() {
         //assumed integer ID in PocketMonsters
-        return Integer.parseInt( this.ID)-1;
+        return Integer.parseInt( this.strID)-1;
     }
 
     public void setID(String ID) {
-        this.ID = ID;
+        this.strID = ID;
     }
 
     public String getAbilities() {
+
+
+
         return abilities;
     }
 
     public void setAbilities(String abilities) {
+
         this.abilities = abilities;
     }
 
@@ -118,9 +122,7 @@ public class Pokemon implements Parcelable {
         this.types = types;
     }
 
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
+
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
@@ -136,7 +138,7 @@ public class Pokemon implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString( name );
         dest.writeString( spriteUrl );
-        dest.writeString( ID );
+        dest.writeString( strID );
         dest.writeString( abilities );
         dest.writeString( types );
         dest.writeParcelable( bitmap, flags );
@@ -149,7 +151,7 @@ public class Pokemon implements Parcelable {
         strCSV+=",";
         strCSV+=spriteUrl;
         strCSV+=",";
-        strCSV+=ID;
+        strCSV+=strID;
         strCSV+=",";
         strCSV+=abilities;
         strCSV+=",";
@@ -168,7 +170,7 @@ public class Pokemon implements Parcelable {
         if(len==6){
             name=strarCSV[0];
             spriteUrl=strarCSV[1];
-            ID=strarCSV[2];
+            strID=strarCSV[2];
             abilities=strarCSV[3];
             types=strarCSV[4];
             bSaved=Boolean.valueOf(strarCSV[5]);
@@ -177,7 +179,7 @@ public class Pokemon implements Parcelable {
             name=strarCSV[0];
 
             spriteUrl=strarCSV[1];
-            ID=strarCSV[2];
+            strID=strarCSV[2];
             abilities=strarCSV[3];
             for(int i=4;i<len-2;i++){
                 abilities+=strarCSV[i];
@@ -185,6 +187,27 @@ public class Pokemon implements Parcelable {
             types=strarCSV[len-2];
             bSaved=Boolean.valueOf(strarCSV[len-1]);
         }
+
+    }
+
+    public Bitmap getBitmap(){
+        if(bitmap==null){
+            new Thread( new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        bitmap = NetworkAdapter.getBitmapFromUrl("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + strID + ".png");
+                    } catch (Exception e) {
+                        e.getMessage();
+                    }
+                }
+            } ).start();
+
+
+        }
+        this.setSpriteUrl("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + strID + ".png");
+        this.setBitmap( bitmap );
+        return bitmap;
 
     }
 }

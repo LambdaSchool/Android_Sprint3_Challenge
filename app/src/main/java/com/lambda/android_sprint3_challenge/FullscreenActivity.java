@@ -13,12 +13,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -66,9 +62,7 @@ public class FullscreenActivity extends AppCompatActivity {
                     String strAbilities = "", strType = "";
 
                     try {
-                        bitmap = NetworkAdapter.getBitmapFromUrl( "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + strID + ".png" );
-                        pokemonCurrent.setBitmap( bitmap );
-                        pokemonCurrent.setSpriteUrl( "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + strID + ".png" );
+
                         JSONObject json = new JSONObject( result );
                         strAbilities = json.getJSONArray( "abilities" ).getJSONObject( 0 ).getJSONObject( "ability" ).getString( "name" );
                         String strAbilityURL = json.getJSONArray( "abilities" ).getJSONObject( 0 ).getJSONObject( "ability" ).getString( "url" );
