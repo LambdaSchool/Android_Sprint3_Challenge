@@ -4,7 +4,7 @@ import java.io.Serializable
 
 
 data class Sprites (
-
+    // thats how front default is referenced in website API (for the image)
     val front_default: String
 
 )
@@ -52,6 +52,8 @@ data class Pokemon (
     val sprites: Sprites,
 
     val id: Int,
+
+    //thats how to reference the list of abilities
 
     val abilities: List<AblityList>,
 

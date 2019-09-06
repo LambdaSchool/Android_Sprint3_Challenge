@@ -45,7 +45,7 @@ class DetailsActivity : AppCompatActivity() {
 
 //        pokemon = data
 
-
+            // Referencing text views with each model item created
 
         val abilities = data?.ability.toString().replace("[", "").replace("]", "")
 

@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
 
 
             val serializedPokemon = SerializedPokemon(pokemon.name,
-                pokemon.sprites.front_default,
+                pokemon.sprites.front_default, // thats how front default is referenced in website API
                 pokemon.id,
                 ability,
                 types)
