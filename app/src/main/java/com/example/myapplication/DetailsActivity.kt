@@ -78,7 +78,7 @@ class DetailsActivity : AppCompatActivity() {
                 }
             }
         }
-        pokemon_image.setOnClickListener {
+        downloadImage.setOnClickListener {
             // TODO: S04M04-4 Start service
             val serviceIntent = Intent(this, LargeImageDownloadService::class.java)
             serviceIntent.putExtra(LargeImageDownloadService.BITMAP_WIDTH, pokemon_image.width)
@@ -90,7 +90,7 @@ class DetailsActivity : AppCompatActivity() {
         }
         // TODO set up download manager (b)
         downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        pokemon_image.setOnClickListener {
+        downloadImage.setOnClickListener {
             //set up a request to enque (take the url and parse through Uri)
             val request = DownloadManager.Request(Uri.parse("https://cdn.bulbagarden.net/upload/thumb/0/0d/025Pikachu.png/1200px-025Pikachu.png"))
 

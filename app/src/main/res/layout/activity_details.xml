@@ -10,48 +10,32 @@
 
     android:layout_height="match_parent"
 
-    tools:context=".activity.DetailsActivity">
-
+    tools:context=".DetailsActivity">
 
 
     <ImageView
 
         android:id="@+id/pokemon_image"
-
         android:layout_width="match_parent"
-
         android:layout_height="300dp"
-
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toTopOf="parent" />
-
-
 
     <TextView
 
         android:id="@+id/text_view_pokemon_name"
-
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
-
         android:layout_marginStart="8dp"
-
         android:layout_marginTop="8dp"
-
         android:layout_marginEnd="8dp"
-
         android:textSize="24sp"
-
         android:textStyle="bold"
-
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toBottomOf="@+id/pokemon_image" />
 
 
@@ -59,78 +43,55 @@
     <TextView
 
         android:id="@+id/text_view_pokemon_number"
-
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
-
         android:layout_marginStart="8dp"
-
         android:layout_marginTop="8dp"
-
         android:layout_marginEnd="8dp"
-
         android:textSize="18sp"
-
         android:textStyle="bold"
-
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/text_view_pokemon_name" />
 
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@+id/text_view_pokemon_name" />
 
 
 
     <TextView
-
         android:id="@+id/text_view_pokemon_type"
-
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
-
         android:layout_marginStart="8dp"
-
         android:layout_marginTop="8dp"
-
         android:layout_marginEnd="8dp"
-
         android:textSize="18sp"
-
         android:textStyle="bold"
-
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toBottomOf="@+id/text_view_pokemon_number" />
-
 
 
     <TextView
 
         android:id="@+id/text_view_pokemon_abilities"
-
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
-
         android:layout_marginStart="8dp"
-
         android:layout_marginTop="8dp"
-
         android:layout_marginEnd="8dp"
-
         android:textSize="18sp"
-
         android:textStyle="bold"
-
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toBottomOf="@+id/text_view_pokemon_type" />
+
+    <Button
+        android:id="@+id/downloadImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SEE THE POKEMON"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_pokemon_abilities" />
 
 
 
