@@ -63,7 +63,7 @@ class ListAdapter(val pokemonList: MutableList<SerializedPokemon>) : RecyclerVie
 
 
 
-        holder.layout.setOnLongClickListener {
+        holder.layout.setOnClickListener {
 
             val title = "Delete Pokemon"
 
@@ -78,6 +78,7 @@ class ListAdapter(val pokemonList: MutableList<SerializedPokemon>) : RecyclerVie
                 .setPositiveButton("YES") { dialog, which ->
 
                     pokemonList.removeAt(position)
+
 
                     notifyDataSetChanged()
 
