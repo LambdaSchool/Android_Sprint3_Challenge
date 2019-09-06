@@ -1,6 +1,12 @@
 package com.example.myapplication
 
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -68,6 +74,8 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
 
 
     lateinit var pokemonSearch: PokemonAPI
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
