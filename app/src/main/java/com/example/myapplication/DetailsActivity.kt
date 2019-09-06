@@ -12,6 +12,7 @@ import android.os.Bundle
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.myapplication.model.SerializedPokemon
 import com.example.myapplication.service.LargeImageDownloadService
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_details.*
 
 class DetailsActivity : AppCompatActivity() {
@@ -52,7 +53,7 @@ class DetailsActivity : AppCompatActivity() {
 
 
 
-   //     Picasso.get().load(data?.sprites).into(pokemon_image)
+     Picasso.get().load(data?.sprites).into(pokemon_image)
 
         text_view_pokemon_name.text = "Name: ${data?.name}"
 
