@@ -30,16 +30,6 @@ class DetailsActivity : AppCompatActivity() {
 
 
 
-    /*companion object {
-
-        val pokemonList = mutableListOf<SerializedPokemon>()
-
-    }*/
-
-
-
-//    lateinit var pokemon: SerializedPokemon
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,7 +92,7 @@ class DetailsActivity : AppCompatActivity() {
         downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         pokemon_image.setOnClickListener {
             //set up a request to enque (take the url and parse through Uri)
-            val request = DownloadManager.Request(Uri.parse("https://i.imgur.com/HaSmgGn.jpg"))
+            val request = DownloadManager.Request(Uri.parse("https://cdn.bulbagarden.net/upload/thumb/0/0d/025Pikachu.png/1200px-025Pikachu.png"))
 
             enqueue = downloadManager.enqueue(request)
         }
@@ -163,7 +153,7 @@ class DetailsActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         // TODO S04M04-10 Unregister receivers
-        unregisterReceiver(imageDownloadReceiver)
+  //      unregisterReceiver(imageDownloadReceiver)
     }
 
     }
