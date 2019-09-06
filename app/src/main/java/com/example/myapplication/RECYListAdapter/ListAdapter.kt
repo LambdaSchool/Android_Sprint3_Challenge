@@ -63,9 +63,10 @@ class ListAdapter(val pokemonList: MutableList<SerializedPokemon>) : RecyclerVie
 
 
 
-        holder.layout.setOnClickListener {
 
-            val title = "Delete Pokemon"
+        holder.layout.setOnLongClickListener {
+
+    /*        val title = "Delete Pokemon"
 
             val message = "Are you sure you want to delete this Pokemon?"
 
@@ -75,20 +76,20 @@ class ListAdapter(val pokemonList: MutableList<SerializedPokemon>) : RecyclerVie
 
                 .setMessage(message)
 
-                .setPositiveButton("YES") { dialog, which ->
+                .setPositiveButton("YES") { dialog, which -> */
 
                     pokemonList.removeAt(position)
 
 
-                    notifyDataSetChanged()
+                   notifyDataSetChanged()
 
-                }
+         //       }
 
-                .setNegativeButton("NO") { _, _ -> }
+        //        .setNegativeButton("NO") { _, _ -> }
 
-                .create()
+       //         .create()
 
-                .show()
+         //       .show()
 
             true
 
