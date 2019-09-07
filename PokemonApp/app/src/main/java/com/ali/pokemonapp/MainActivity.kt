@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
         if(response.isSuccessful) {
 
             val pokemonDetails= response.body()
-            layout_list.addView(createTextView(pokemonDetails?.name.toString(),pokemonDetails?.id.toString().toInt(),1 ))
+            layout_list.addView(createTextView(pokemonDetails?.name.toString(),pokemonDetails?.id.toString().toInt(),layout_list.childCount ))
 
 
 
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
     }
     fun createTextView(pokemonName: String,pokemonId:Int,index:Int): TextView {
         val view = TextView(this)
-        view.text = pokemonName
+        view.text = "$pokemonName-$pokemonId"
         view.textSize = 24f
         view.tag=index
         view.id=pokemonId
@@ -62,10 +62,8 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
             startActivity(intent)
         }
         view.setOnLongClickListener {
-            if(layout_list.childCount==1)
-            layout_list.removeViewAt(index-1)
-            else
-                layout_list.removeViewAt(index)
+            layout_list.removeViewAt(index)
+
 
             return@setOnLongClickListener true
         }

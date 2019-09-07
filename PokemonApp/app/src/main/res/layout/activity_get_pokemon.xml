@@ -10,7 +10,6 @@
 
     <ImageView
             android:id="@+id/pokemon_Sprite"
-            android:src="@drawable/ic_launcher_background"
             android:layout_marginLeft="100dp"
             android:layout_marginTop="20dp"
             android:layout_width="220dp"
