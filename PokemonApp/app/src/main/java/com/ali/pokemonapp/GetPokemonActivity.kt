@@ -23,11 +23,11 @@ class GetPokemonActivity : AppCompatActivity(), Callback<Pokemon> {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_get_pokemon)
         pokemonService= PokemonApi.Factory.create()
-        val pokemonID=intent.getIntExtra("POKEMON_ID",1)
-        getPokemonbyId(pokemonID)
+        val pokemonID=intent.getStringExtra("POKEMON_ID")
+        getPokemonbyNameOrId(pokemonID.toString())
     }
-    private fun getPokemonbyId(pokemonId: Int){
-        pokemonService.getPokemonById(pokemonId).enqueue(this)
+    private fun getPokemonbyNameOrId(pokemonId: String){
+        pokemonService.getPokemonByIdorName(pokemonId).enqueue(this)
     }
     override fun onResponse(call: Call<Pokemon>, response: Response<Pokemon>) {
         if(response.isSuccessful) {

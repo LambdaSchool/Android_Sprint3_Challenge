@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
         super.onCreate(savedInstanceState)
         btn_search_pokemon.setOnClickListener {
             pokemonService= PokemonApi.Factory.create()
-            val pokemonId:Int=et_pokemon_no.text.toString().toInt()
+            val pokemonId:String=et_pokemon_no.text.toString()
             getPokemonbyId(pokemonId)
 
         }
@@ -31,8 +31,8 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
 
 
     }
-    private fun getPokemonbyId(pokemonId: Int){
-        pokemonService.getPokemonById(pokemonId).enqueue(this)
+    private fun getPokemonbyId(pokemonId: String){
+        pokemonService.getPokemonByIdorName(pokemonId).enqueue(this)
     }
     override fun onResponse(call: Call<Pokemon>, response: Response<Pokemon>) {
         if(response.isSuccessful) {
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), Callback<Pokemon> {
         view.id=pokemonId
         view.setOnClickListener {
             val intent = Intent(this, GetPokemonActivity::class.java)
-            intent.putExtra("POKEMON_ID",pokemonId)
+            intent.putExtra("POKEMON_ID",pokemonName)
             startActivity(intent)
         }
         view.setOnLongClickListener {

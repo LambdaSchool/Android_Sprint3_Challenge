@@ -11,8 +11,8 @@ import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 interface PokemonApi {
-    @GET("pokemon/{id}")
-    fun getPokemonById(@Path("id")Pokemon:Int): Call<Pokemon>
+    @GET("pokemon/{name-id}")
+    fun getPokemonByIdorName(@Path("name-id")nameOrID:String): Call<Pokemon>
 
     class Factory {
 
